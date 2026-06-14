@@ -1,0 +1,2638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Programming II — Complete Study Guide & Exam</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Sora:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #21262d;
+    --surface3: #30363d;
+    --border: #30363d;
+    --accent: #58a6ff;
+    --accent2: #3fb950;
+    --accent3: #f78166;
+    --accent4: #d2a8ff;
+    --accent5: #ffa657;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --text-faint: #484f58;
+    --correct: #1a4731;
+    --correct-border: #3fb950;
+    --wrong: #3d1a1a;
+    --wrong-border: #f78166;
+    --hint: #1c2a3a;
+    --hint-border: #58a6ff;
+    --code-bg: #0d1117;
+    --tag-bg: #1c2a3a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(13,17,23,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 0 24px;
+    height: 52px;
+    overflow-x: auto;
+  }
+  nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 0 14px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color .2s, border-color .2s;
+  }
+  nav a:hover, nav a.active { color: var(--accent); border-bottom-color: var(--accent); }
+  nav .logo { font-family: 'Sora', sans-serif; font-weight: 800; color: var(--accent); margin-right: 20px; font-size: 15px; white-space: nowrap; }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #0d1117 0%, #131a24 50%, #0d1117 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 72px 24px 56px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(88,166,255,0.08) 0%, transparent 70%);
+  }
+  .hero-tag {
+    display: inline-block;
+    background: var(--tag-bg);
+    border: 1px solid var(--hint-border);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero p { color: var(--text-muted); font-size: 16px; max-width: 620px; margin: 0 auto 32px; }
+  .hero-stats {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .stat { text-align: center; }
+  .stat-n { font-family: 'Sora', sans-serif; font-size: 28px; font-weight: 800; color: var(--accent); }
+  .stat-l { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── SECTION HEADERS ── */
+  .section-header {
+    padding: 56px 0 32px;
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--text-faint);
+    line-height: 1;
+  }
+  .section-info { flex: 1; }
+  .section-info .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .section-info h2 {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  /* ── LESSON CARDS ── */
+  .lesson-block { margin-bottom: 48px; }
+  .lesson-title {
+    font-family: 'Sora', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent4);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .lesson-title::before {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 22px;
+    background: var(--accent4);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+  .lesson-sub {
+    font-family: 'Sora', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--accent5);
+    margin: 24px 0 8px;
+  }
+
+  /* ── EXPLANATION BOXES ── */
+  .explain-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .explain-box p { color: var(--text-muted); margin-bottom: 10px; }
+  .explain-box p:last-child { margin-bottom: 0; }
+
+  .analogy-box {
+    background: linear-gradient(135deg, #1a2535, #1c2a1e);
+    border: 1px solid #2d4a3e;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .analogy-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 8px;
+  }
+  .analogy-box p { color: #a8d5b5; font-style: italic; }
+
+  .prog-box {
+    background: linear-gradient(135deg, #1a2535, #1a1f35);
+    border: 1px solid #2a3a5a;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .prog-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .prog-box p { color: #a8c5e5; }
+
+  /* ── CODE BLOCKS ── */
+  .code-block {
+    background: #010409;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin: 16px 0;
+    overflow: hidden;
+  }
+  .code-block-header {
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: space-between;
+  }
+  .code-block-header .dots { display: flex; gap: 6px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: #f78166; }
+  .dot-y { background: #ffa657; }
+  .dot-g { background: #3fb950; }
+  .code-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); }
+  .code-block pre {
+    padding: 20px;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .kw { color: #ff7b72; }
+  .kw2 { color: #d2a8ff; }
+  .str { color: #a5d6ff; }
+  .num { color: #79c0ff; }
+  .cmt { color: #8b949e; font-style: italic; }
+  .cls { color: #ffa657; }
+  .fn { color: #d2a8ff; }
+  .var { color: #e6edf3; }
+  .op { color: #ff7b72; }
+
+  .output-box {
+    background: #010409;
+    border: 1px solid var(--accent2);
+    border-left: 4px solid var(--accent2);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin: 8px 0 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent2);
+  }
+  .output-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; font-family: 'Inter', sans-serif; }
+
+  /* ── CALLOUTS ── */
+  .callout {
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    display: flex;
+    gap: 12px;
+  }
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout.note { background: #1c2a3a; border: 1px solid #2a4a6a; }
+  .callout.note p { color: #a8c5e5; }
+  .callout.warn { background: #2a1f0d; border: 1px solid #5a3a0d; }
+  .callout.warn p { color: #d4a46a; }
+  .callout.tip { background: #0d2a1a; border: 1px solid #1a5a2a; }
+  .callout.tip p { color: #7dd3a8; }
+
+  /* ── TABLE ── */
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+  th { background: var(--surface2); color: var(--text); padding: 10px 14px; text-align: left; font-weight: 600; border: 1px solid var(--border); }
+  td { padding: 10px 14px; border: 1px solid var(--border); color: var(--text-muted); vertical-align: top; }
+  tr:nth-child(even) td { background: var(--surface); }
+
+  /* ── WORKED EXAMPLE ── */
+  .worked-example {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    margin: 20px 0;
+  }
+  .worked-header {
+    background: var(--surface2);
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .worked-badge {
+    background: var(--accent4);
+    color: #000;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+  .worked-title { font-weight: 600; color: var(--text); }
+  .worked-body { padding: 20px; }
+
+  /* ── DIVIDER ── */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+  /* ───────────────────────────────────────
+     EXAM SECTION
+  ─────────────────────────────────────── */
+  #exam { padding-bottom: 80px; }
+
+  .exam-controls {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .btn-primary { background: var(--accent); color: #000; }
+  .btn-primary:hover { background: #79bcff; }
+  .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+  .btn-secondary:hover { background: var(--surface3); }
+  .btn-success { background: var(--accent2); color: #000; }
+  .btn-success:hover { background: #52d06a; }
+  .btn-danger { background: var(--accent3); color: #000; }
+  .btn-danger:hover { background: #ff9080; }
+
+  .score-board {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .score-item { text-align: center; }
+  .score-n { font-family: 'Sora', sans-serif; font-size: 26px; font-weight: 800; }
+  .score-n.sc-correct { color: var(--accent2); }
+  .score-n.sc-wrong { color: var(--accent3); }
+  .score-n.sc-total { color: var(--accent); }
+  .score-n.sc-pct { color: var(--accent4); }
+  .score-l { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+
+  /* Question card */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 24px;
+    overflow: hidden;
+    transition: border-color .3s;
+  }
+  .q-card.answered-correct { border-color: var(--correct-border); }
+  .q-card.answered-wrong { border-color: var(--wrong-border); }
+
+  .q-header {
+    background: var(--surface2);
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .q-num {
+    background: var(--tag-bg);
+    border: 1px solid var(--hint-border);
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 6px;
+  }
+  .q-type {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 6px;
+  }
+  .q-type.theory { background: #1c2a3a; color: var(--accent); }
+  .q-type.code { background: #1a2535; color: var(--accent4); }
+
+  .q-body { padding: 20px; }
+  .q-text { font-size: 15px; color: var(--text); margin-bottom: 16px; line-height: 1.7; }
+
+  .q-code {
+    background: #010409;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-x: auto;
+  }
+
+  /* Options */
+  .options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all .2s;
+    font-size: 14px;
+    color: var(--text-muted);
+    text-align: left;
+    width: 100%;
+  }
+  .option:hover:not(:disabled) { background: var(--surface3); border-color: var(--accent); color: var(--text); }
+  .option .opt-letter {
+    background: var(--surface3);
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .option.selected { background: #1c2a3a; border-color: var(--accent); color: var(--text); }
+  .option.correct { background: var(--correct); border-color: var(--correct-border); color: #7dd3a8; }
+  .option.correct .opt-letter { background: var(--correct-border); color: #000; }
+  .option.wrong { background: var(--wrong); border-color: var(--wrong-border); color: #f4a69a; }
+  .option.wrong .opt-letter { background: var(--wrong-border); color: #000; }
+  .option:disabled { cursor: default; }
+
+  /* Feedback area */
+  .q-feedback { display: none; margin-top: 16px; }
+  .q-feedback.visible { display: block; }
+
+  .feedback-result {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  .feedback-result.correct { background: var(--correct); border: 1px solid var(--correct-border); color: #7dd3a8; }
+  .feedback-result.wrong { background: var(--wrong); border: 1px solid var(--wrong-border); color: #f4a69a; }
+
+  .hint-buttons { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+
+  .hint-btn {
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--hint-border);
+    background: var(--hint);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .hint-btn:hover { background: #1e3a5a; }
+
+  .explain-btn {
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .explain-btn:hover { background: var(--surface3); color: var(--text); }
+
+  .hint-panel {
+    display: none;
+    background: var(--hint);
+    border: 1px solid var(--hint-border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 8px;
+    font-size: 13px;
+    color: #a8c5e5;
+  }
+  .hint-panel.open { display: block; }
+
+  .short-explain {
+    display: none;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .short-explain.open { display: block; }
+
+  .deep-explain {
+    display: none;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent4);
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+  .deep-explain.open { display: block; }
+  .deep-explain h4 { color: var(--accent4); font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+  .deep-explain code {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent5);
+  }
+  .deep-explain pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    overflow-x: auto;
+    margin-top: 8px;
+    color: #a5d6ff;
+  }
+
+  .progress-bar-wrap {
+    background: var(--surface2);
+    border-radius: 4px;
+    height: 6px;
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent4));
+    border-radius: 4px;
+    transition: width .5s ease;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .hero { padding: 48px 16px 40px; }
+    .container { padding: 0 16px; }
+    .hero-stats { gap: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="logo">☕ Prog II</span>
+  <a href="#study">Study Guide</a>
+  <a href="#java-syntax">Java Syntax</a>
+  <a href="#methods">Methods</a>
+  <a href="#oop">OOP</a>
+  <a href="#constructors">Constructors</a>
+  <a href="#static">Static Members</a>
+  <a href="#exam">📝 Exam</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">Programming II — Complete Guide</div>
+  <h1>Master <span>Java OOP</span><br>from Zero to Expert</h1>
+  <p>Full lecture notes with real-world analogies, worked examples, and a 40-question exam with hints and deep explanations.</p>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-n">4</div><div class="stat-l">Lectures Covered</div></div>
+    <div class="stat"><div class="stat-n">40</div><div class="stat-l">MCQ Questions</div></div>
+    <div class="stat"><div class="stat-n">2</div><div class="stat-l">Hints Per Question</div></div>
+    <div class="stat"><div class="stat-n">∞</div><div class="stat-l">Deep Explanations</div></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════
+     STUDY GUIDE
+════════════════════════════════════════════════════════ -->
+<div id="study">
+<div class="container">
+
+  <!-- ── JAVA SYNTAX REFRESHER ── -->
+  <div id="java-syntax">
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <div class="section-info">
+        <div class="eyebrow">Before OOP</div>
+        <h2>Java Syntax Refresher</h2>
+      </div>
+    </div>
+
+    <div class="lesson-block">
+      <div class="lesson-title">Variables and Data Types</div>
+
+      <div class="analogy-box">
+        <div class="analogy-label">🌍 Real World</div>
+        <p>Imagine you have labeled boxes. The label is the variable name, and what you put in the box is the value. A box labeled "age" only holds a number — you can't put a name in it unless you choose that type of box.</p>
+      </div>
+
+      <div class="prog-box">
+        <div class="prog-label">☕ Java</div>
+        <p>In Java, every variable has a <strong>type</strong> that decides what kind of data it can hold. You must declare the type before using it.</p>
+      </div>
+
+      <table>
+        <tr><th>Type</th><th>What it holds</th><th>Example</th></tr>
+        <tr><td><code style="color:var(--accent4)">int</code></td><td>Whole numbers</td><td><code style="color:var(--accent5)">int age = 20;</code></td></tr>
+        <tr><td><code style="color:var(--accent4)">double</code></td><td>Decimal numbers</td><td><code style="color:var(--accent5)">double price = 3.99;</code></td></tr>
+        <tr><td><code style="color:var(--accent4)">boolean</code></td><td>true / false</td><td><code style="color:var(--accent5)">boolean pass = true;</code></td></tr>
+        <tr><td><code style="color:var(--accent4)">char</code></td><td>Single character</td><td><code style="color:var(--accent5)">char grade = 'A';</code></td></tr>
+        <tr><td><code style="color:var(--accent4)">String</code></td><td>Text (sequence of chars)</td><td><code style="color:var(--accent5)">String name = "Ali";</code></td></tr>
+      </table>
+
+      <div class="worked-example">
+        <div class="worked-header">
+          <span class="worked-badge">Example 1</span>
+          <span class="worked-title">Declaring and using variables</span>
+        </div>
+        <div class="worked-body">
+          <div class="code-block">
+            <div class="code-block-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><span class="code-label">Variables.java</span></div>
+            <pre><span class="kw">int</span> score = <span class="num">85</span>;
+<span class="kw">double</span> average = <span class="num">92.5</span>;
+<span class="kw">boolean</span> passed = <span class="kw">true</span>;
+<span class="cls">String</span> name = <span class="str">"Sara"</span>;
+
+<span class="cls">System</span>.out.<span class="fn">println</span>(name + <span class="str">" scored: "</span> + score);
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Passed? "</span> + passed);</pre>
+          </div>
+          <div class="output-box"><div class="output-label">Output</div>Sara scored: 85<br>Passed? true</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="lesson-block">
+      <div class="lesson-title">Control Flow — if / else / loops</div>
+
+      <div class="analogy-box">
+        <div class="analogy-label">🌍 Real World</div>
+        <p>A traffic light works with conditions. IF the light is green, you go. ELSE IF it's yellow, you slow down. ELSE (red), you stop. A loop is like turning pages of a book — you keep turning until you reach the last page.</p>
+      </div>
+
+      <div class="worked-example">
+        <div class="worked-header">
+          <span class="worked-badge">Example 2</span>
+          <span class="worked-title">if/else + for loop</span>
+        </div>
+        <div class="worked-body">
+          <div class="code-block">
+            <div class="code-block-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><span class="code-label">Control.java</span></div>
+            <pre><span class="kw">int</span> mark = <span class="num">75</span>;
+<span class="kw">if</span> (mark >= <span class="num">90</span>) {
+    <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Excellent"</span>);
+} <span class="kw">else if</span> (mark >= <span class="num">60</span>) {
+    <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Pass"</span>);
+} <span class="kw">else</span> {
+    <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Fail"</span>);
+}
+
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i <= <span class="num">3</span>; i++) {
+    <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Round: "</span> + i);
+}</pre>
+          </div>
+          <div class="output-box"><div class="output-label">Output</div>Pass<br>Round: 1<br>Round: 2<br>Round: 3</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="lesson-block">
+      <div class="lesson-title">Arrays</div>
+      <div class="analogy-box">
+        <div class="analogy-label">🌍 Real World</div>
+        <p>An array is like a train with numbered seats (starting from 0). Seat #0, Seat #1, Seat #2… Each seat holds one passenger (value) of the same type.</p>
+      </div>
+      <div class="worked-example">
+        <div class="worked-header">
+          <span class="worked-badge">Example 3</span>
+          <span class="worked-title">Creating and accessing arrays</span>
+        </div>
+        <div class="worked-body">
+          <div class="code-block">
+            <div class="code-block-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><span class="code-label">Arrays.java</span></div>
+            <pre><span class="kw">int</span>[] scores = {<span class="num">90</span>, <span class="num">75</span>, <span class="num">88</span>};
+<span class="cmt">// Index:       0    1    2</span>
+
+<span class="cls">System</span>.out.<span class="fn">println</span>(scores[<span class="num">0</span>]); <span class="cmt">// 90</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(scores[<span class="num">2</span>]); <span class="cmt">// 88</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(scores.length); <span class="cmt">// 3</span>
+
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i < scores.length; i++) {
+    <span class="cls">System</span>.out.<span class="fn">println</span>(scores[i]);
+}</pre>
+          </div>
+          <div class="output-box"><div class="output-label">Output</div>90<br>88<br>3<br>90<br>75<br>88</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── METHODS ── -->
+  <div id="methods">
+    <div class="section-header">
+      <div class="section-num">02</div>
+      <div class="section-info">
+        <div class="eyebrow">Lecture 1</div>
+        <h2>Methods (Functions)</h2>
+      </div>
+    </div>
+
+    <div class="lesson-block">
+      <div class="lesson-title">What is a Method?</div>
+
+      <div class="analogy-box">
+        <div class="analogy-label">🌍 Real World</div>
+        <p>Imagine you're a restaurant manager. Instead of cooking every dish yourself, you hire specialist chefs: a pizza chef, a pasta chef, a dessert chef. You call on them when needed. Methods are exactly those specialist chefs — each does one specific job, and you call them when you need that job done.</p>
+      </div>
+
+      <div class="prog-box">
+        <div class="prog-label">☕ Java</div>
+        <p>A method is a named block of code that performs a specific task. You write it once and can call it many times. This keeps your code organized and avoids repetition.</p>
+      </div>
+
+      <div class="explain-box">
+        <p><strong style="color:var(--accent)">Method Syntax:</strong></p>
+        <p><code style="color:var(--accent4)">returnType methodName(parameterList) { ... return value; }</code></p>
+        <p>• <strong>returnType</strong>: what type of value the method gives back. Use <code style="color:var(--accent4)">void</code> if it gives nothing back.</p>
+        <p>• <strong>methodName</strong>: what you call the method.</p>
+        <p>• <strong>parameterList</strong>: inputs the method needs (can be empty).</p>
+        <p>• <strong>return</strong>: sends a value back to whoever called the method.</p>
+      </div>
+
+      <div class="worked-example">
+        <div class="worked-header">
+          <span class="worked-badge">Example 1</span>
+          <span class="worked-title">void method — no return value, no parameters</span>
+        </div>
+        <div class="worked-body">
+          <div class="code-block">
+            <div class="code-block-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><span class="code-label">DrawLine.java</span></div>
+            <pre><span class="kw">public class</span> <span class="cls">Main</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="cls">String</span>[] args) {
+        <span class="fn">drawLine</span>(); <span class="cmt">// call the method</span>
+        <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Java Lectures"</span>);
+        <span class="fn">drawLine</span>(); <span class="cmt">// call again — reuse!</span>
+    }
+
+    <span class="kw">public static void</span> <span class="fn">drawLine</span>() {
+        <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i <= <span class="num">10</span>; i++) {
+            <span class="cls">System</span>.out.<span class="fn">print</span>(<span class="str">"*"</span>);
+        }
+        <span class="cls">System</span>.out.<span class="fn">println</span>();
+    }
+}</pre>
+          </div>
+          <div class="output-box"><div class="output-label">Output</div>**********<br>Java Lectures<br>**********</div>
+        </div>
+      </div>
+
+      <div class="worked-example">
+        <div class="worked-header">
+          <span class="worked-badge">Example 2</span>
+          <span class="worked-title">Method with parameters</span>
+        </div>
+        <div class="worked-body">
+          <div class="code-block">
+            <div class="code-block-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><span class="code-label">Params.java</span></div>
+            <pre><span class="kw">public static void</span> <span class="fn">drawLine</span>(<span class="kw">char</span> symbol, <span class="kw">int</span> length) {
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i <= length; i++) {
+        <span class="cls">System</span>.out.<span class="fn">print</span>(symbol);
+    }
+}
+
+<span class="cmt">// In main:</span>
+<span class="fn">drawLine</span>(<span class="str">'*'</span>, <span class="num">10</span>); <span class="cmt">// **********</span>
+<span class="fn">drawLine</span>(<span class="str">'#'</span>, <span class="num">5</span>);  <span class="cmt">// #####</span></pre>
+          </div>
+          <div class="output-box"><div class="output-label">Output</div>**********<br>#####</div>
+        </div>
+      </div>
+
+      <div class="worked-example">
+        <div class="worked-header">
+          <span class="worked-badge">Example 3</span>
+          <span class="worked-title">Method with return value</span>
+        </div>
+        <div class="worked-body">
+          <div class="code-block">
+            <div class="code-block-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><span class="code-label">ReturnValue.java</span></div>
+            <pre><span class="kw">public static int</span> <span class="fn">sum</span>(<span class="kw">int</span> i, <span class="kw">int</span> j) {
+    <span class="kw">int</span> result = i + j;
+    <span class="kw">return</span> result; <span class="cmt">// sends value back</span>
+}
+
+<span class="cmt">// In main:</span>
+<span class="kw">int</span> x = <span class="num">20</span>, y = <span class="num">30</span>;
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Sum is "</span> + <span class="fn">sum</span>(x, y));</pre>
+          </div>
+          <div class="output-box"><div class="output-label">Output</div>Sum is 50</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="lesson-block">
+      <div class="lesson-title">Variable Scope — Local vs Global</div>
+      <div class="analogy-box">
+        <div class="analogy-label">🌍 Real World</div>
+        <p>Think of your house (the class) and your bedroom (a method). A key inside your bedroom only opens your bedroom door — that's a <strong>local</strong> variable. A master key that works anywhere in the house — that's a <strong>global</strong> variable (called a field in Java).</p>
+      </div>
+      <div class="explain-box">
+        <p><strong style="color:var(--accent)">Local Variable:</strong> Declared inside a method. Only visible inside that method. Dies when the method finishes.</p>
+        <p><strong style="color:var(--accent)">Global (static) Variable:</strong> Declared outside all methods (but inside the class) with <code style="color:var(--accent4)">static</code>. Accessible by all methods in the class.</p>
+      </div>
+      <div class="code-block">
+        <div class="code-block-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><span class="code-label">Scope.java</span></div>
+        <pre><span class="kw">public class</span> <span class="cls">Main</span> {
+    <span class="kw">static int</span> x; <span class="cmt">// global — accessible everywhere</span>
+
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="cls">String</span>[] args) {
+        x = <span class="num">100</span>;
+        <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"x = "</span> + x); <span class="cmt">// 100</span>
+        <span class="fn">display</span>();
+    }
+
+    <span class="kw">public static void</span> <span class="fn">display</span>() {
+        <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"x = "</span> + x); <span class="cmt">// also 100</span>
+    }
+}</pre>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="lesson-block">
+      <div class="lesson-title">Method Overloading</div>
+      <div class="analogy-box">
+        <div class="analogy-label">🌍 Real World</div>
+        <p>Think of the word "play". You can play football, play piano, play a video game. Same word — but different actions depending on context (what you're playing). Method overloading is the same: same method name, but different parameters.</p>
+      </div>
+      <div class="explain-box">
+        <p>Java allows multiple methods with the <strong>same name</strong> as long as their <strong>parameter lists are different</strong> (different types or different count). The <strong>return type alone</strong> is NOT enough to distinguish them.</p>
+        <p>A <strong>method signature</strong> = method name + parameter list (NOT return type).</p>
+      </div>
+      <div class="code-block">
+        <div class="code-block-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><span class="code-label">Overloading.java</span></div>
+        <pre><span class="kw">public static int</span>    <span class="fn">getlarger</span>(<span class="kw">int</span> a, <span class="kw">int</span> b) { ... }
+<span class="kw">public static int</span>    <span class="fn">getlarger</span>(<span class="kw">int</span> a, <span class="kw">int</span> b, <span class="kw">int</span> c) { ... }
+<span class="kw">public static double</span> <span class="fn">getlarger</span>(<span class="kw">double</span> x, <span class="kw">double</span> y) { ... }
+<span class="cmt">// Java picks the right one based on what arguments you pass</span></pre>
+      </div>
+      <div class="output-box"><div class="output-label">Calling getlarger(20, 30)</div>→ uses first version → returns 30</div>
+      <div class="output-box"><div class="output-label">Calling getlarger(20, 30, 70)</div>→ uses second version → returns 70</div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="lesson-block">
+      <div class="lesson-title">Call by Value vs Call by Reference</div>
+      <div class="analogy-box">
+        <div class="analogy-label">🌍 Real World</div>
+        <p><strong>Call by Value</strong>: You photocopy a document and give it to someone. They can write on the copy all they want — your original is unchanged.<br><strong>Call by Reference</strong>: You give someone your actual document. Changes they make affect the original.</p>
+      </div>
+      <div class="explain-box">
+        <p>• <strong>Primitive types</strong> (int, double, char, boolean…): passed <strong>by value</strong>. The method gets a copy. Changes inside don't affect the original variable.</p>
+        <p>• <strong>Arrays and Objects</strong>: passed <strong>by reference</strong>. The method gets the memory address. Changes inside DO affect the original.</p>
+      </div>
+      <div class="worked-example">
+        <div class="worked-header">
+          <span class="worked-badge">Example</span>
+          <span class="worked-title">Array passed by reference</span>
+        </div>
+        <div class="worked-body">
+          <div class="code-block">
+            <div class="code-block-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><span class="code-label">ByRef.java</span></div>
+            <pre><span class="kw">public static void</span> <span class="fn">increase</span>(<span class="kw">int</span>[] a) {
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i < a.length; i++) {
+        a[i] = a[i] * <span class="num">2</span>; <span class="cmt">// modifies original!</span>
+    }
+}
+<span class="cmt">// In main:</span>
+<span class="kw">int</span>[] iq = {<span class="num">126</span>, <span class="num">167</span>, <span class="num">95</span>};
+<span class="fn">increase</span>(iq);
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="cls">Arrays</span>.<span class="fn">toString</span>(iq));</pre>
+          </div>
+          <div class="output-box"><div class="output-label">Output</div>[252, 334, 190]</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── OOP ── -->
+  <div id="oop">
+    <div class="section-header">
+      <div class="section-num">03</div>
+      <div class="section-info">
+        <div class="eyebrow">Lecture 2</div>
+        <h2>Object-Oriented Programming</h2>
+      </div>
+    </div>
+
+    <div class="lesson-block">
+      <div class="lesson-title">What is OOP?</div>
+      <div class="analogy-box">
+        <div class="analogy-label">🌍 Real World</div>
+        <p>Before OOP: imagine building a city where every single building is custom-built from scratch with no plans. OOP is like having <strong>blueprints</strong>. One blueprint (class) lets you build many identical houses (objects), each with their own address and furniture (data), but all shaped the same way.</p>
+      </div>
+      <div class="prog-box">
+        <div class="prog-label">☕ Java</div>
+        <p>OOP is a style of programming where you model your program as interacting <strong>objects</strong>. Each object has <strong>data</strong> (fields/attributes) and <strong>behaviors</strong> (methods/operations).</p>
+      </div>
+      <div class="explain-box">
+        <p><strong style="color:var(--accent)">Class</strong> = the blueprint. Defines what data and methods objects will have.</p>
+        <p><strong style="color:var(--accent)">Object</strong> = an actual instance created from the blueprint. Lives in memory.</p>
+        <p><strong style="color:var(--accent)">Field</strong> = data stored inside an object (e.g., name, age, salary).</p>
+        <p><strong style="color:var(--accent)">Method</strong> = action the object can perform (e.g., getSalary(), setName()).</p>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="lesson-block">
+      <div class="lesson-title">Writing a Class</div>
+      <div class="analogy-box">
+        <div class="analogy-label">🌍 Real World</div>
+        <p>Let's design a Car blueprint. Every car has: color, speed, fuel level (data). Every car can: accelerate, brake, refuel (methods). The blueprint doesn't drive anywhere — but when you actually build a car from it, THAT car can drive.</p>
+      </div>
+
+      <div class="worked-example">
+        <div class="worked-header">
+          <span class="worked-badge">Example 1</span>
+          <span class="worked-title">Creating a Car class and objects</span>
+        </div>
+        <div class="worked-body">
+          <div class="code-block">
+            <div class="code-block-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><span class="code-label">Car.java</span></div>
+            <pre><span class="kw">public class</span> <span class="cls">Car</span> {
+    <span class="kw">private</span> <span class="cls">String</span> maker;   <span class="cmt">// field (data)</span>
+    <span class="kw">private int</span> model;       <span class="cmt">// field (data)</span>
+
+    <span class="cmt">// SETTER — sets data</span>
+    <span class="kw">public void</span> <span class="fn">setMaker</span>(<span class="cls">String</span> m) { maker = m; }
+    <span class="kw">public void</span> <span class="fn">setModel</span>(<span class="kw">int</span> year)  { model = year; }
+
+    <span class="cmt">// GETTER — reads data</span>
+    <span class="kw">public</span> <span class="cls">String</span> <span class="fn">getMaker</span>() { <span class="kw">return</span> maker; }
+    <span class="kw">public int</span>    <span class="fn">getModel</span>() { <span class="kw">return</span> model; }
+}</pre>
+          </div>
+          <div class="code-block">
+            <div class="code-block-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><span class="code-label">Main.java</span></div>
+            <pre><span class="cls">Car</span> c1 = <span class="kw">new</span> <span class="cls">Car</span>();   <span class="cmt">// create object</span>
+c1.<span class="fn">setMaker</span>(<span class="str">"Honda"</span>);
+c1.<span class="fn">setModel</span>(<span class="num">2016</span>);
+<span class="cls">System</span>.out.<span class="fn">println</span>(c1.<span class="fn">getMaker</span>());  <span class="cmt">// Honda</span>
+
+<span class="cls">Car</span> c2 = <span class="kw">new</span> <span class="cls">Car</span>();   <span class="cmt">// separate object</span>
+c2.<span class="fn">setMaker</span>(<span class="str">"Toyota"</span>);
+c2.<span class="fn">setModel</span>(<span class="num">2019</span>);</pre>
+          </div>
+          <div class="output-box"><div class="output-label">Output</div>Honda</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="lesson-block">
+      <div class="lesson-title">Access Modifiers — public vs private</div>
+      <div class="analogy-box">
+        <div class="analogy-label">🌍 Real World</div>
+        <p>A bank vault has two areas: the <strong>public lobby</strong> where anyone can go, and the <strong>private vault</strong> where only authorized staff access the money directly. The teller (method) is public — you interact with them. The vault contents (data) are private — the teller accesses them on your behalf.</p>
+      </div>
+      <div class="explain-box">
+        <p><strong style="color:var(--accent3)">private</strong>: Only accessible within the same class. Fields are almost always private to protect data.</p>
+        <p><strong style="color:var(--accent2)">public</strong>: Accessible from anywhere — from Main, from other classes, etc.</p>
+      </div>
+      <div class="callout warn">
+        <div class="callout-icon">⚠️</div>
+        <div><p>If a field is <code>private</code> and you try to access it directly from another class (e.g., <code>r1.length = 60</code>), Java gives a <strong>compile error</strong>: "length has private access in Rectangle". You MUST use a public setter method.</p></div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="lesson-block">
+      <div class="lesson-title">Encapsulation (Data Hiding)</div>
+      <div class="analogy-box">
+        <div class="analogy-label">🌍 Real World</div>
+        <p>A TV remote. You press buttons (public methods) to change channel or volume. You never touch the circuit board inside (private fields). The TV hides its internal wiring — that's encapsulation. You only interact through the provided interface (the remote).</p>
+      </div>
+      <div class="explain-box">
+        <p>Encapsulation = keeping fields <strong>private</strong> + providing <strong>public getters and setters</strong> to access/modify them. This lets the class <strong>validate</strong> data before accepting it.</p>
+      </div>
+      <div class="worked-example">
+        <div class="worked-header">
+          <span class="worked-badge">Example 2</span>
+          <span class="worked-title">Data validation in a setter</span>
+        </div>
+        <div class="worked-body">
+          <div class="code-block">
+            <div class="code-block-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><span class="code-label">Validation.java</span></div>
+            <pre><span class="kw">public void</span> <span class="fn">setMaker</span>(<span class="cls">String</span> m) {
+    <span class="kw">if</span> (m.<span class="fn">equals</span>(<span class="str">"Toyota"</span>) || m.<span class="fn">equals</span>(<span class="str">"Honda"</span>) || m.<span class="fn">equals</span>(<span class="str">"Mercedes"</span>)) {
+        maker = m;
+    } <span class="kw">else</span> {
+        <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"invalid maker"</span>);
+    }
+}
+
+<span class="kw">public void</span> <span class="fn">setModel</span>(<span class="kw">int</span> year) {
+    <span class="kw">if</span> (year > <span class="num">2012</span>) {
+        model = year;
+    } <span class="kw">else</span> {
+        <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"invalid model"</span>);
+    }
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="worked-example">
+        <div class="worked-header">
+          <span class="worked-badge">Example 3</span>
+          <span class="worked-title">Full Rectangle class with encapsulation</span>
+        </div>
+        <div class="worked-body">
+          <div class="code-block">
+            <div class="code-block-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><span class="code-label">Rectangle.java</span></div>
+            <pre><span class="kw">public class</span> <span class="cls">Rectangle</span> {
+    <span class="kw">private double</span> length;
+    <span class="kw">private double</span> width;
+
+    <span class="kw">public void</span> <span class="fn">setLength</span>(<span class="kw">double</span> l) { length = l; }
+    <span class="kw">public void</span> <span class="fn">setWidth</span>(<span class="kw">double</span> w)  { width = w;  }
+    <span class="kw">public double</span> <span class="fn">getLength</span>() { <span class="kw">return</span> length; }
+    <span class="kw">public double</span> <span class="fn">getWidth</span>()  { <span class="kw">return</span> width;  }
+    <span class="kw">public double</span> <span class="fn">getArea</span>()   { <span class="kw">return</span> length * width; }
+}
+
+<span class="cmt">// Main:</span>
+<span class="cls">Rectangle</span> r1 = <span class="kw">new</span> <span class="cls">Rectangle</span>();
+r1.<span class="fn">setLength</span>(<span class="num">10</span>);
+r1.<span class="fn">setWidth</span>(<span class="num">12.5</span>);
+<span class="cls">System</span>.out.<span class="fn">println</span>(r1.<span class="fn">getArea</span>()); <span class="cmt">// 125.0</span></pre>
+          </div>
+          <div class="output-box"><div class="output-label">Output</div>125.0</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="lesson-block">
+      <div class="lesson-title">The <code style="font-family:JetBrains Mono;font-size:18px;color:var(--accent)">this</code> Keyword</div>
+      <div class="analogy-box">
+        <div class="analogy-label">🌍 Real World</div>
+        <p>When someone asks "whose car is this?" — you say "<strong>this</strong> is MY car." In Java, <code>this</code> refers to the current object — it's the object saying "I own this field."</p>
+      </div>
+      <div class="explain-box">
+        <p>Java automatically adds <code>this.</code> before instance variable references inside instance methods. It's needed explicitly when a local parameter has the same name as an instance field (variable hiding).</p>
+      </div>
+      <div class="code-block">
+        <div class="code-block-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><span class="code-label">ThisKeyword.java</span></div>
+        <pre><span class="kw">class</span> <span class="cls">Circle</span> {
+    <span class="kw">public int</span> radius;
+
+    <span class="kw">void</span> <span class="fn">setRadius</span>(<span class="kw">int</span> radius) {
+        <span class="cmt">// 'radius' alone refers to the parameter</span>
+        <span class="cmt">// 'this.radius' refers to the field</span>
+        <span class="kw">this</span>.radius = radius;
+    }
+}</pre>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="lesson-block">
+      <div class="lesson-title">Variable Types in OOP</div>
+      <table>
+        <tr><th>Type</th><th>Where declared</th><th>Keyword</th><th>Scope</th></tr>
+        <tr><td>Local variable</td><td>Inside a method</td><td>(none)</td><td>Only in that method</td></tr>
+        <tr><td>Instance variable (field)</td><td>Inside class, outside methods</td><td><code>private/public</code></td><td>Whole object</td></tr>
+        <tr><td>Class variable (static field)</td><td>Inside class, outside methods</td><td><code>static</code></td><td>All objects share it</td></tr>
+        <tr><td>Parameter</td><td>Method declaration</td><td>(type)</td><td>Only in that method</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── CONSTRUCTORS ── -->
+  <div id="constructors">
+    <div class="section-header">
+      <div class="section-num">04</div>
+      <div class="section-info">
+        <div class="eyebrow">Lecture — Constructors</div>
+        <h2>Constructors</h2>
+      </div>
+    </div>
+
+    <div class="lesson-block">
+      <div class="lesson-title">What is a Constructor?</div>
+      <div class="analogy-box">
+        <div class="analogy-label">🌍 Real World</div>
+        <p>When a new employee joins a company, there's an <strong>onboarding process</strong>: they get a badge, assigned a desk, a computer set up. This happens automatically the moment they join. A constructor is exactly that — it runs automatically when a new object is created, setting everything up.</p>
+      </div>
+      <div class="explain-box">
+        <p>Key rules for constructors:</p>
+        <p>• Same name as the class</p>
+        <p>• No return type (not even void)</p>
+        <p>• Called automatically with <code style="color:var(--accent4)">new</code></p>
+        <p>• Can be overloaded (multiple constructors with different parameters)</p>
+      </div>
+
+      <div class="worked-example">
+        <div class="worked-header">
+          <span class="worked-badge">Example 1</span>
+          <span class="worked-title">Basic constructor</span>
+        </div>
+        <div class="worked-body">
+          <div class="code-block">
+            <div class="code-block-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><span class="code-label">Constructor.java</span></div>
+            <pre><span class="kw">public class</span> <span class="cls">Rectangle</span> {
+    <span class="kw">private double</span> length;
+    <span class="kw">private double</span> width;
+
+    <span class="kw">public</span> <span class="cls">Rectangle</span>() {          <span class="cmt">// constructor</span>
+        length = <span class="num">10</span>;               <span class="cmt">// auto-runs on new Rectangle()</span>
+        width  = <span class="num">15</span>;
+    }
+    <span class="kw">public double</span> <span class="fn">getLength</span>() { <span class="kw">return</span> length; }
+    <span class="kw">public double</span> <span class="fn">getWidth</span>()  { <span class="kw">return</span> width; }
+}
+
+<span class="cmt">// Main:</span>
+<span class="cls">Rectangle</span> r1 = <span class="kw">new</span> <span class="cls">Rectangle</span>(); <span class="cmt">// constructor runs here</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(r1.<span class="fn">getLength</span>()); <span class="cmt">// 10.0</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(r1.<span class="fn">getWidth</span>());  <span class="cmt">// 15.0</span></pre>
+          </div>
+          <div class="output-box"><div class="output-label">Output</div>10.0<br>15.0</div>
+        </div>
+      </div>
+
+      <div class="worked-example">
+        <div class="worked-header">
+          <span class="worked-badge">Example 2</span>
+          <span class="worked-title">Constructor overloading</span>
+        </div>
+        <div class="worked-body">
+          <div class="code-block">
+            <div class="code-block-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><span class="code-label">ConstructorOverload.java</span></div>
+            <pre><span class="kw">public class</span> <span class="cls">Rectangle</span> {
+    <span class="kw">private double</span> length, width;
+
+    <span class="kw">public</span> <span class="cls">Rectangle</span>() {                     <span class="cmt">// no-arg constructor</span>
+        length = <span class="num">10</span>; width = <span class="num">15</span>;
+    }
+
+    <span class="kw">public</span> <span class="cls">Rectangle</span>(<span class="kw">double</span> l, <span class="kw">double</span> w) { <span class="cmt">// parameterized constructor</span>
+        length = l; width = w;
+    }
+    <span class="kw">public double</span> <span class="fn">getLength</span>() { <span class="kw">return</span> length; }
+    <span class="kw">public double</span> <span class="fn">getWidth</span>()  { <span class="kw">return</span> width; }
+}
+
+<span class="cmt">// Main:</span>
+<span class="cls">Rectangle</span> r1 = <span class="kw">new</span> <span class="cls">Rectangle</span>();        <span class="cmt">// 10, 15</span>
+<span class="cls">Rectangle</span> r2 = <span class="kw">new</span> <span class="cls">Rectangle</span>(<span class="num">40</span>, <span class="num">60</span>); <span class="cmt">// 40, 60</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(r1.<span class="fn">getLength</span>());   <span class="cmt">// 10.0</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(r2.<span class="fn">getLength</span>());   <span class="cmt">// 40.0</span></pre>
+          </div>
+          <div class="output-box"><div class="output-label">Output</div>10.0<br>40.0</div>
+        </div>
+      </div>
+
+      <div class="lesson-sub">The Default Constructor</div>
+      <div class="explain-box">
+        <p>If you write <strong>no constructor at all</strong>, Java provides a <strong>default constructor</strong> automatically. It initializes:</p>
+        <p>• Numeric fields → <strong>0</strong> (int, double, etc.)</p>
+        <p>• boolean fields → <strong>false</strong></p>
+        <p>• String and object fields → <strong>null</strong></p>
+        <p>⚠️ If you write <em>any</em> constructor, Java no longer provides the default. You must write it yourself if needed.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── STATIC MEMBERS ── -->
+  <div id="static">
+    <div class="section-header">
+      <div class="section-num">05</div>
+      <div class="section-info">
+        <div class="eyebrow">Lecture — Static</div>
+        <h2>Static Class Members</h2>
+      </div>
+    </div>
+
+    <div class="lesson-block">
+      <div class="lesson-title">Static Fields and Static Methods</div>
+      <div class="analogy-box">
+        <div class="analogy-label">🌍 Real World</div>
+        <p>A school has students (objects). Each student has their own name and grade (instance fields). But there's ONE school name, ONE principal — shared by all students. That shared thing is a <strong>static</strong> field. You don't ask "what's Student Ahmed's school name?" — you say "what's the school's name?"</p>
+      </div>
+      <div class="explain-box">
+        <p><strong>Static fields</strong>: Belong to the CLASS itself, not to any object. All objects share the same copy.</p>
+        <p><strong>Static methods</strong>: Called using the class name, not an object. Example: <code style="color:var(--accent4)">Math.sqrt(25)</code> — you don't create a Math object first.</p>
+        <p>Static methods <strong>cannot</strong> directly access instance (non-static) fields. They can only use static fields.</p>
+      </div>
+
+      <div class="worked-example">
+        <div class="worked-header">
+          <span class="worked-badge">Example 1</span>
+          <span class="worked-title">Counting objects with a static field</span>
+        </div>
+        <div class="worked-body">
+          <div class="code-block">
+            <div class="code-block-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><span class="code-label">StaticField.java</span></div>
+            <pre><span class="kw">public class</span> <span class="cls">Car</span> {
+    <span class="kw">private</span> <span class="cls">String</span> maker;
+    <span class="kw">private int</span> model;
+    <span class="kw">private static int</span> no_of_objects; <span class="cmt">// shared across ALL cars</span>
+
+    <span class="kw">public</span> <span class="cls">Car</span>() {
+        maker = <span class="str">"Honda"</span>;
+        model = <span class="num">2017</span>;
+        no_of_objects++;  <span class="cmt">// increments every time new Car is made</span>
+    }
+
+    <span class="kw">public static int</span> <span class="fn">get_no_of_objects</span>() {
+        <span class="kw">return</span> no_of_objects;
+    }
+}
+
+<span class="cmt">// Main:</span>
+<span class="cls">Car</span> c1 = <span class="kw">new</span> <span class="cls">Car</span>();
+<span class="cls">Car</span> c2 = <span class="kw">new</span> <span class="cls">Car</span>();
+<span class="cls">Car</span> c3 = <span class="kw">new</span> <span class="cls">Car</span>();
+<span class="cls">Car</span> c4 = <span class="kw">new</span> <span class="cls">Car</span>();
+
+<span class="cmt">// Both work — static method can be called on class OR object:</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="cls">Car</span>.<span class="fn">get_no_of_objects</span>()); <span class="cmt">// 4</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(c2.<span class="fn">get_no_of_objects</span>());  <span class="cmt">// also 4</span></pre>
+          </div>
+          <div class="output-box"><div class="output-label">Output</div>4<br>4</div>
+        </div>
+      </div>
+
+      <div class="worked-example">
+        <div class="worked-header">
+          <span class="worked-badge">Example 2</span>
+          <span class="worked-title">Utility class with all static methods</span>
+        </div>
+        <div class="worked-body">
+          <div class="code-block">
+            <div class="code-block-header"><div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div><span class="code-label">Calc.java + Main.java</span></div>
+            <pre><span class="kw">public class</span> <span class="cls">Calc</span> {
+    <span class="kw">public static int</span>    <span class="fn">add</span>(<span class="kw">int</span> a, <span class="kw">int</span> b) { <span class="kw">return</span> a + b; }
+    <span class="kw">public static int</span>    <span class="fn">subtract</span>(<span class="kw">int</span> a, <span class="kw">int</span> b) { <span class="kw">return</span> a - b; }
+    <span class="kw">public static int</span>    <span class="fn">multiply</span>(<span class="kw">int</span> a, <span class="kw">int</span> b) { <span class="kw">return</span> a * b; }
+}
+
+<span class="cmt">// Main — no object needed, call with class name:</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="cls">Calc</span>.<span class="fn">add</span>(<span class="num">30</span>, <span class="num">20</span>));      <span class="cmt">// 50</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="cls">Calc</span>.<span class="fn">subtract</span>(<span class="num">30</span>, <span class="num">20</span>)); <span class="cmt">// 10</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="cls">Calc</span>.<span class="fn">multiply</span>(<span class="num">30</span>, <span class="num">20</span>)); <span class="cmt">// 600</span></pre>
+          </div>
+          <div class="output-box"><div class="output-label">Output</div>50<br>10<br>600</div>
+        </div>
+      </div>
+
+      <div class="lesson-sub">Static vs Instance — Summary</div>
+      <table>
+        <tr><th>Feature</th><th>Instance (non-static)</th><th>Static</th></tr>
+        <tr><td>Belongs to</td><td>Each object separately</td><td>The class itself</td></tr>
+        <tr><td>How to call</td><td><code>object.method()</code></td><td><code>ClassName.method()</code></td></tr>
+        <tr><td>Can access instance fields?</td><td>✅ Yes</td><td>❌ No</td></tr>
+        <tr><td>Can access static fields?</td><td>✅ Yes</td><td>✅ Yes</td></tr>
+        <tr><td>Example</td><td><code>r1.getArea()</code></td><td><code>Math.sqrt(4)</code></td></tr>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /container -->
+</div><!-- /study -->
+
+<!-- ════════════════════════════════════════════════════════
+     EXAM SECTION
+════════════════════════════════════════════════════════ -->
+<div id="exam" style="background:var(--bg); padding-top:40px;">
+<div class="container">
+
+  <div class="section-header">
+    <div class="section-num">📝</div>
+    <div class="section-info">
+      <div class="eyebrow">Self-Assessment</div>
+      <h2>40-Question Exam</h2>
+    </div>
+  </div>
+
+  <div class="score-board" id="scoreBoard">
+    <div class="score-item"><div class="score-n sc-correct" id="sc">0</div><div class="score-l">Correct</div></div>
+    <div class="score-item"><div class="score-n sc-wrong" id="sw">0</div><div class="score-l">Wrong</div></div>
+    <div class="score-item"><div class="score-n sc-total" id="sa">0</div><div class="score-l">Answered</div></div>
+    <div class="score-item"><div class="score-n sc-pct" id="sp">0%</div><div class="score-l">Score</div></div>
+  </div>
+
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressBar" style="width:0%"></div></div>
+
+  <div class="exam-controls">
+    <button class="btn btn-secondary" onclick="resetExam()">🔄 Reset Exam</button>
+    <button class="btn btn-secondary" onclick="showAllAnswers()">👁 Reveal All</button>
+  </div>
+
+  <div id="questions"></div>
+
+</div>
+</div>
+
+<script>
+// ════════════════════════════════════════
+// QUESTION DATA
+// ════════════════════════════════════════
+const questions = [
+  // ── METHODS (Q1-10) ──
+  {
+    type: "theory",
+    q: "What is the primary purpose of using methods in a Java program?",
+    opts: ["To increase program file size", "To break a program into smaller, reusable, manageable pieces", "To make the program run slower", "To create new data types"],
+    ans: 1,
+    hints: ["Think about what problem methods solve when code gets very long.", "Methods allow you to write something once and reuse it many times."],
+    short: "Methods allow dividing a large program into smaller, reusable blocks, making programs easier to develop and maintain.",
+    deep: `<h4>Deep Explanation</h4>
+Methods (also called functions in other languages) solve a critical problem: real programs can have thousands of lines. Without methods, code would be one gigantic main method that's impossible to read, debug, or reuse.<br><br>
+Key benefits:<br>
+• <strong>Code reuse</strong>: write once, call many times<br>
+• <strong>Readability</strong>: break problem into named steps<br>
+• <strong>Maintenance</strong>: fix a bug in one method → fixed everywhere<br>
+• <strong>Team work</strong>: different programmers can write different methods<br><br>
+<pre>// WITHOUT methods — messy
+System.out.println("*****");
+doSomething();
+System.out.println("*****"); // copy-paste!
+
+// WITH methods — clean
+drawLine(); doSomething(); drawLine();</pre>`
+  },
+  {
+    type: "theory",
+    q: "What keyword is used as the return type when a method does NOT return any value?",
+    opts: ["null", "nothing", "void", "empty"],
+    ans: 2,
+    hints: ["It's a keyword meaning 'nothing'.", "It's 4 letters long and means 'no value returned'."],
+    short: "<code>void</code> is the return type for methods that perform an action but don't give back any value.",
+    deep: `<h4>Deep Explanation</h4>
+In Java, every method must declare what type of value it returns. If the method just does something (like printing) without giving anything back, we use <code>void</code>.<br><br>
+<pre>// void method — just does a job
+public static void printHello() {
+    System.out.println("Hello!");
+    // NO return statement needed
+}
+
+// non-void method — must return a value
+public static int add(int a, int b) {
+    return a + b; // MUST have return
+}</pre>
+⚠️ A void method CAN have <code>return;</code> (with no value) to exit early, but it cannot do <code>return 5;</code>`
+  },
+  {
+    type: "code",
+    q: "What is the output of this program?",
+    code: `public class Main {
+    public static void main(String[] args) {
+        int x = 20, y = 30;
+        System.out.println("Sum is " + sum(x, y));
+    }
+    public static int sum(int i, int j) {
+        int result = i + j;
+        return result;
+    }
+}`,
+    opts: ["Sum is 20", "Sum is 30", "Sum is 50", "Compile error"],
+    ans: 2,
+    hints: ["The sum() method adds its two parameters and returns the result.", "20 + 30 = ?"],
+    short: "sum(20, 30) computes 20 + 30 = 50 and returns it. It's printed with the String 'Sum is'.",
+    deep: `<h4>Step-by-step Trace</h4>
+1. <code>sum(x, y)</code> is called with x=20, y=30<br>
+2. Inside sum: i=20, j=30; result = 20+30 = 50; return 50<br>
+3. Back in main: <code>System.out.println("Sum is " + 50)</code><br>
+4. String concatenation: "Sum is " + 50 → "Sum is 50"<br>
+Output: <strong>Sum is 50</strong><br><br>
+<pre>// Calling a method with return value:
+int total = sum(x, y);  // stores returned 50
+System.out.println("Sum is" + total);
+// OR inline (as shown above):
+System.out.println("Sum is" + sum(x,y));</pre>`
+  },
+  {
+    type: "code",
+    q: "What is the output of this program?",
+    code: `public class Main {
+    static int x;
+    public static void main(String[] args) {
+        x = 100;
+        System.out.println("x = " + x);
+        display();
+    }
+    public static void display() {
+        System.out.println("x = " + x);
+    }
+}`,
+    opts: ["x = 100 then error", "x = 100\nx = 100", "x = 0\nx = 100", "x = 100\nx = 0"],
+    ans: 1,
+    hints: ["Notice where 'x' is declared — is it inside or outside of methods?", "A static global variable is shared across all methods."],
+    short: "x is a static (global) variable. Both main() and display() can read it. Since x=100 before calling display(), both print 100.",
+    deep: `<h4>Deep Explanation</h4>
+<code>static int x;</code> is declared at the <strong>class level</strong>, outside any method. This makes it a <strong>class variable (global)</strong> shared by all methods.<br><br>
+<pre>public class Main {
+    static int x; // class-level, shared globally
+    
+    public static void main(...) {
+        x = 100;         // sets shared x to 100
+        display();       // display sees x=100
+    }
+    
+    public static void display() {
+        System.out.println(x); // reads shared x = 100
+    }
+}</pre>
+If x were declared <em>inside</em> main() (<code>int x = 100;</code>), display() would get a compile error — "cannot find symbol x".`
+  },
+  {
+    type: "theory",
+    q: "What is method overloading?",
+    opts: ["Calling a method from another class", "Having two methods with the same name but different parameter lists", "A method that calls itself", "Making a method return multiple values"],
+    ans: 1,
+    hints: ["Think about having the same 'name' but different 'inputs'.", "The signature (name + parameter list) must differ."],
+    short: "Method overloading means defining multiple methods in the same class with the same name but different parameter lists (different types or different number of parameters).",
+    deep: `<h4>Deep Explanation</h4>
+Overloading lets you use one intuitive name for operations that do similar things on different data types.<br><br>
+<pre>// All named 'getlarger' — different signatures:
+public static int getlarger(int a, int b) { ... }
+public static int getlarger(int a, int b, int c) { ... }
+public static double getlarger(double a, double b) { ... }</pre>
+Java picks the right version at compile time based on what arguments you pass.<br><br>
+⚠️ <strong>Return type alone does NOT make overloading valid</strong>:<br>
+<pre>// This is NOT valid overloading — compile error!
+public static int foo(int x) { ... }
+public static double foo(int x) { ... } // same params!</pre>`
+  },
+  {
+    type: "theory",
+    q: "Which of these is a VALID method signature for overloading with a method named 'Sum' that already has the signature Sum(int x, int y)?",
+    opts: ["double Sum(int x, int y)", "void Sum(int x, int y)", "int Sum(int a, int b)", "int Sum(int x, int y, int z)"],
+    ans: 3,
+    hints: ["Overloading requires a different parameter list, not just different names/types of return.", "Adding a THIRD parameter creates a different signature."],
+    short: "Sum(int x, int y, int z) has a different parameter list (3 parameters vs 2), making it a valid overload. The others all have the same parameter list (two ints) — only the return type differs, which is NOT enough.",
+    deep: `<h4>Method Signature = Name + Parameters</h4>
+The return type is NOT part of the signature.<br><br>
+• Option A: same params (int, int) — same signature → INVALID<br>
+• Option B: same params (int, int) — same signature → INVALID<br>
+• Option C: same params (int, int) — changing parameter names doesn't matter → INVALID<br>
+• Option D: params (int, int, int) — THREE parameters → DIFFERENT signature → VALID ✅<br><br>
+<pre>int Sum(int x, int y)          // signature: Sum(int, int)
+int Sum(int x, int y, int z)   // signature: Sum(int, int, int) ✅
+double Sum(double x, double y) // signature: Sum(double, double) ✅
+int Sum(int x, double y)       // signature: Sum(int, double) ✅</pre>`
+  },
+  {
+    type: "code",
+    q: "What is the output?",
+    code: `public class Main {
+    public static void main(String[] args) {
+        int[] iq = {126, 167, 95};
+        increase(iq);
+        System.out.println(iq[0] + " " + iq[2]);
+    }
+    public static void increase(int[] a) {
+        for (int i = 0; i < a.length; i++) {
+            a[i] = a[i] * 2;
+        }
+    }
+}`,
+    opts: ["126 95", "252 190", "252 95", "126 190"],
+    ans: 1,
+    hints: ["Arrays are passed by reference — changes inside the method affect the original.", "126 × 2 = 252. 95 × 2 = 190."],
+    short: "Arrays are passed by reference. The increase() method doubles every element in the original array. iq[0] becomes 252, iq[2] becomes 190.",
+    deep: `<h4>Call by Reference — Arrays</h4>
+When you pass an array to a method, you pass its <strong>memory address</strong>. Both the original variable (<code>iq</code>) and the parameter (<code>a</code>) point to the SAME array in memory.<br><br>
+<pre>int[] iq = {126, 167, 95};
+// In memory: [126][167][95] ← iq points here
+
+increase(iq); // 'a' inside method = same memory location
+
+// After increase: [252][334][190]
+// iq[0] = 252, iq[1] = 334, iq[2] = 190</pre>
+This is DIFFERENT from passing a primitive (int, double), where a COPY is made and the original is unchanged.`
+  },
+  {
+    type: "code",
+    q: "What does this method print when called as drawline('*', 10)?",
+    code: `public static void drawline(char x, int length) {
+    for (int i = 1; i <= length; i++) {
+        System.out.print(x);
+    }
+}`,
+    opts: ["10 stars on separate lines", "**********  (10 stars on one line)", "x printed 10 times", "Nothing — compile error"],
+    ans: 1,
+    hints: ["print() vs println() — one adds a newline, the other doesn't.", "The loop runs 'length' times, printing 'x' each time without a newline."],
+    short: "System.out.print() does NOT add a newline. The loop runs 10 times printing '*' each time, resulting in 10 stars on ONE line.",
+    deep: `<h4>print vs println</h4>
+<pre>System.out.print("*");   // prints * (no newline)
+System.out.println("*"); // prints * then moves to next line</pre>
+The loop: i starts at 1, continues while i <= 10, prints '*' each time without newline.<br>
+Result: <strong>**********</strong> (all on one line)<br><br>
+If the code used <code>println</code>, output would be:<br>
+*<br>*<br>*<br>*<br>*<br>*<br>*<br>*<br>*<br>*`
+  },
+  {
+    type: "theory",
+    q: "What is the scope of a local variable?",
+    opts: ["It can be used anywhere in the program", "It can only be used in the class it's declared in", "It can only be used from the point of declaration to the end of its block/method", "It can be used by all methods in the class"],
+    ans: 2,
+    hints: ["'Local' means limited — it doesn't go beyond its home.", "When the method ends, local variables are destroyed."],
+    short: "A local variable is only accessible from where it's declared to the end of the block or method it belongs to. After the method returns, it no longer exists.",
+    deep: `<h4>Variable Scope Rules</h4>
+<pre>public class Main {
+    static int global = 5; // class-level: ALL methods
+
+    public static void foo() {
+        int x = 10; // local to foo() ONLY
+        System.out.println(x);    // ✅ ok
+        System.out.println(global); // ✅ ok
+    }
+    
+    public static void bar() {
+        System.out.println(x);    // ❌ ERROR: x not visible here
+        System.out.println(global); // ✅ ok
+    }
+}</pre>
+Even within a method, a variable declared inside an if-block only lives inside that block:<br>
+<pre>if (x > 0) {
+    int temp = x * 2; // only inside this if-block
+}
+System.out.println(temp); // ❌ ERROR: temp out of scope</pre>`
+  },
+  {
+    type: "code",
+    q: "What is the output of this three-function program?",
+    code: `import java.util.Scanner;
+public class Main {
+    public static void main(String[] args) {
+        int number1 = 20, number2 = 30, number3 = 10;
+        int total = sum(number1, number2, number3);
+        double avg = average(number1, number2, number3);
+        display(total, avg);
+    }
+    public static int sum(int n1, int n2, int n3) { return n1+n2+n3; }
+    public static double average(int i, int j, int k) { return sum(i,j,k)/3f; }
+    public static void display(int t, double a) {
+        System.out.println("The sum is " + t);
+        System.out.println("The average is " + a);
+    }
+}`,
+    opts: ["The sum is 60\nThe average is 20.0", "The sum is 60\nThe average is 20", "The sum is 50\nThe average is 20.0", "Compile error"],
+    ans: 0,
+    hints: ["Sum of 20+30+10. Average calls sum() again and divides by 3f (float division).", "3f makes division produce a float/double result."],
+    short: "sum=60. average calls sum(20,30,10)=60, divides by 3f (float) = 20.0. display prints both.",
+    deep: `<h4>Key Insight: 3f vs 3</h4>
+<pre>60 / 3   = 20   (integer division — drops decimal)
+60 / 3f  = 20.0 (float division — keeps decimal)
+60 / 3.0 = 20.0 (double division — keeps decimal)</pre>
+The <code>f</code> suffix makes <code>3f</code> a float literal, forcing floating-point division.<br><br>
+Also note: <code>average</code> calls <code>sum(i,j,k)</code> — methods can call other methods! The call chain:<br>
+main → display, main → average → sum`
+  },
+
+  // ── OOP (Q11-22) ──
+  {
+    type: "theory",
+    q: "What is the difference between a class and an object in Java?",
+    opts: ["They are the same thing", "A class is the blueprint; an object is an instance created from that blueprint", "An object is the blueprint; a class is the instance", "A class is only used for methods; an object only holds data"],
+    ans: 1,
+    hints: ["Think: architectural blueprint vs an actual house built from it.", "You use 'new' to create an object from a class."],
+    short: "A class is the template/blueprint that defines data and behavior. An object is a specific instance in memory created from that class using 'new'.",
+    deep: `<h4>Blueprint vs House Analogy</h4>
+<pre>// CLASS = blueprint (no memory allocated for data yet)
+public class Car {
+    private String maker;
+    private int model;
+    // ... methods
+}
+
+// OBJECT = actual car built from blueprint (memory allocated!)
+Car c1 = new Car(); // c1 is an object (instance)
+Car c2 = new Car(); // c2 is another object — separate memory
+</pre>
+c1 and c2 are both Cars, but they have SEPARATE data. Changing c1.setMaker("Honda") doesn't affect c2.<br><br>
+<strong>UML notation:</strong> A box with 3 sections: class name | fields | methods`
+  },
+  {
+    type: "theory",
+    q: "What is encapsulation in OOP?",
+    opts: ["Inheriting methods from a parent class", "Keeping fields private and providing public methods to access/modify them", "Making all methods static", "Writing all code in the main method"],
+    ans: 1,
+    hints: ["It's about hiding internal data and exposing a safe interface.", "Think of a TV remote — you interact with buttons, not the circuit board."],
+    short: "Encapsulation means hiding an object's internal data (private fields) and only allowing access through public methods (getters/setters). This protects data integrity.",
+    deep: `<h4>Why Encapsulation Matters</h4>
+Without encapsulation:<br>
+<pre>r1.width = -7; // Who stops this negative value?</pre>
+With encapsulation:<br>
+<pre>public void setWidth(double w) {
+    if (w > 0) width = w;
+    else System.out.println("Invalid width!");
+}
+// Now bad data is rejected!</pre>
+Encapsulation = <strong>private fields</strong> + <strong>public getter/setter methods</strong><br>
+The setter can validate, log, or transform the input before storing it.`
+  },
+  {
+    type: "code",
+    q: "Given the Rectangle class has 'private double length', what happens?",
+    code: `// Rectangle class:
+//   private double length;
+//   public double width;
+
+public class Main {
+    public static void main(String[] args) {
+        Rectangle r1 = new Rectangle();
+        r1.width = 10.5;   // line A
+        r1.length = 60;    // line B
+    }
+}`,
+    opts: ["Both A and B work fine", "Line A gives compile error; Line B works", "Line B gives compile error; Line A works", "Both A and B give compile errors"],
+    ans: 2,
+    hints: ["'private' means not accessible from outside the class.", "width is public — accessible. length is private — not accessible directly."],
+    short: "Line A works because width is public. Line B gives a compile error because length is private — it can't be accessed directly from outside the Rectangle class.",
+    deep: `<h4>Access Modifiers Rules</h4>
+<pre>// In Rectangle.java:
+public double width;   // ✅ anyone can access
+private double length; // ❌ only Rectangle's own methods</pre>
+From Main.java:<br>
+<pre>r1.width = 10.5;  // ✅ public field — ok
+r1.length = 60;   // ❌ COMPILE ERROR: "length has private access in Rectangle"</pre>
+The correct way to set a private field is through a public setter:<br>
+<pre>r1.setLength(60); // ✅ setLength() is public and can access length internally</pre>`
+  },
+  {
+    type: "theory",
+    q: "What are setter methods also known as?",
+    opts: ["Accessors", "Mutators", "Constructors", "Validators"],
+    ans: 1,
+    hints: ["They 'mutate' (change) the object's state.", "Getter = Accessor, Setter = ?"],
+    short: "Setters are called Mutators because they mutate (change/modify) the object's data. Getters are called Accessors because they access/read data.",
+    deep: `<h4>Getter/Setter Naming</h4>
+<pre>// Getter (Accessor) — returns a value, void:
+public double getWidth() { return width; }
+public String getMaker() { return maker; }
+
+// Setter (Mutator) — takes a value, void:
+public void setWidth(double w) { width = w; }
+public void setMaker(String m) { maker = m; }</pre>
+Convention:<br>
+• Getter: <code>get + FieldName()</code> with return type matching the field<br>
+• Setter: <code>set + FieldName(Type param)</code> returning void`
+  },
+  {
+    type: "code",
+    q: "What is the output?",
+    code: `public class Rectangle {
+    private double length;
+    private double width;
+    public void setlength(double l) { length = l; }
+    public void setwidth(double w)  { width = w; }
+    public double getlength() { return length; }
+    public double getwidth()  { return width; }
+    public double getarea()   { return length * width; }
+}
+// Main:
+Rectangle r1 = new Rectangle();
+r1.setlength(10);
+r1.setwidth(12.5);
+Rectangle r2 = new Rectangle();
+r2.setlength(18);
+r2.setwidth(20);
+System.out.println(r1.getlength());
+System.out.println(r2.getarea());`,
+    opts: ["10.0 then 360.0", "10.0 then 38.0", "10 then 360", "18.0 then 360.0"],
+    ans: 0,
+    hints: ["r1.getlength() returns the length of r1 specifically (not r2).", "r2.getarea() = 18 × 20 = 360."],
+    short: "r1.getlength() returns 10.0 (a double). r2.getarea() = 18 × 20 = 360.0. Each object has its own separate fields.",
+    deep: `<h4>Objects Have Separate State</h4>
+<pre>Rectangle r1 = new Rectangle(); // object 1 in memory
+r1.setlength(10);
+r1.setwidth(12.5);
+// r1: length=10.0, width=12.5
+
+Rectangle r2 = new Rectangle(); // DIFFERENT object in memory
+r2.setlength(18);
+r2.setwidth(20);
+// r2: length=18.0, width=20.0
+
+r1.getlength() → 10.0      // r1's own length
+r2.getarea()   → 18*20=360.0 // r2's area</pre>
+Fields are per-object. r1 and r2 do NOT share length or width.`
+  },
+  {
+    type: "theory",
+    q: "What does 'this' keyword refer to in Java?",
+    opts: ["The parent class", "The current method", "The current object (instance)", "The main class"],
+    ans: 2,
+    hints: ["When inside a method, 'this' is the object that called the method.", "'this.fieldName' distinguishes the field from a local parameter with the same name."],
+    short: "'this' refers to the current object — the instance on which the method was called. It's used to distinguish instance variables from local parameters with the same name.",
+    deep: `<h4>When is 'this' Needed?</h4>
+<pre>class Circle {
+    int radius; // instance field
+    
+    // Without 'this' — works when names differ:
+    void setRadius(int r) {
+        radius = r; // r=param, radius=field
+    }
+    
+    // With 'this' — needed when names are SAME:
+    void setRadius2(int radius) {
+        this.radius = radius;
+        // this.radius = field
+        // radius (alone) = parameter
+    }
+}</pre>
+Java adds <code>this.</code> invisibly before all instance field accesses. It becomes visible/necessary only when there's a naming conflict.`
+  },
+  {
+    type: "theory",
+    q: "What is the access modifier that makes a class member accessible ONLY within its own class?",
+    opts: ["public", "protected", "private", "static"],
+    ans: 2,
+    hints: ["You want the most restrictive access — only internal access.", "It's the opposite of 'public'."],
+    short: "'private' restricts access to within the declaring class only. Code in any other class — including Main — cannot directly access a private member.",
+    deep: `<h4>Access Modifiers Summary</h4>
+<table style="font-size:12px;border-collapse:collapse">
+<tr style="background:#21262d"><th style="padding:6px 10px;border:1px solid #30363d">Modifier</th><th style="padding:6px 10px;border:1px solid #30363d">Same Class</th><th style="padding:6px 10px;border:1px solid #30363d">Other Classes</th></tr>
+<tr><td style="padding:6px 10px;border:1px solid #30363d">private</td><td style="padding:6px 10px;border:1px solid #30363d">✅</td><td style="padding:6px 10px;border:1px solid #30363d">❌</td></tr>
+<tr><td style="padding:6px 10px;border:1px solid #30363d">public</td><td style="padding:6px 10px;border:1px solid #30363d">✅</td><td style="padding:6px 10px;border:1px solid #30363d">✅</td></tr>
+</table><br>
+Fields should almost always be <strong>private</strong>. Methods that form the public interface should be <strong>public</strong>. This is the core of encapsulation.`
+  },
+  {
+    type: "theory",
+    q: "In OOP, what does an object consist of?",
+    opts: ["Only data (fields)", "Only methods", "Both data AND methods (operations)", "Only constructors"],
+    ans: 2,
+    hints: ["Think of a real object like a car — it has properties AND things it can do.", "The slide literally states: Object = Data + Operations"],
+    short: "An object consists of both DATA (fields/attributes that describe state) and OPERATIONS (methods that describe behavior).",
+    deep: `<h4>Object = State + Behavior</h4>
+<pre>// Student OBJECT has:
+// DATA (state):
+String name = "Ahmed";
+int id = 1050;
+double GPA = 3.75;
+int studyLevel = 5;
+
+// OPERATIONS (behavior/methods):
+void modifyGPA(double newGPA) { ... }
+void changeStudyLevel(int level) { ... }
+String getStudentName() { ... }
+String getStudentAddress() { ... }</pre>
+This is different from procedural programming where data and functions are separate. OOP bundles them together into a meaningful unit.`
+  },
+  {
+    type: "code",
+    q: "What output does this produce?",
+    code: `// Car class:
+//   private String maker;  private int model;
+//   setMaker validates: only "Toyota", "Honda", "Mercedes" accepted
+//   setModel validates: year must be > 2012
+
+Car c1 = new Car();
+c1.setMaker("Honda");
+c1.setModel(2016);
+Car c2 = new Car();
+c2.setMaker("BMW");     // invalid!
+c2.setModel(2008);      // invalid!
+System.out.println(c1.getMaker());`,
+    opts: ["Honda", "invalid maker\ninvalid model\nHonda", "BMW", "null"],
+    ans: 1,
+    hints: ["The setters validate before assigning. Invalid inputs print an error message.", "Only c1 is printed, and c1.setMaker('Honda') IS valid."],
+    short: "c2.setMaker('BMW') prints 'invalid maker'. c2.setModel(2008) prints 'invalid model'. Then c1.getMaker() prints 'Honda' (c1 was set with valid data).",
+    deep: `<h4>Setter Validation in Action</h4>
+<pre>// c1 — all valid:
+c1.setMaker("Honda"); // "Honda" is in valid list → maker = "Honda"
+c1.setModel(2016);    // 2016 > 2012 → model = 2016
+
+// c2 — both invalid:
+c2.setMaker("BMW");   // "BMW" NOT in list → prints "invalid maker"
+                      // c2.maker remains null (default)
+c2.setModel(2008);    // 2008 NOT > 2012 → prints "invalid model"
+
+System.out.println(c1.getMaker()); // "Honda"</pre>
+Final output:<br>invalid maker<br>invalid model<br>Honda`
+  },
+  {
+    type: "code",
+    q: "What is the output?",
+    code: `public class Main {
+    public static void main(String[] args) {
+        int x = 20, y = 30, z = 70;
+        System.out.println(getlarger(x, y));
+        System.out.println(getlarger(x, y, z));
+    }
+    public static int getlarger(int a, int b) {
+        if (a > b) return a;
+        else return b;
+    }
+    public static int getlarger(int a, int b, int c) {
+        if (a > b && a > c) return a;
+        else if (b > a && b > c) return b;
+        else return c;
+    }
+}`,
+    opts: ["20\n70", "30\n70", "30\n30", "70\n70"],
+    ans: 1,
+    hints: ["getlarger(20,30) — which is bigger, 20 or 30?", "getlarger(20,30,70) — which is biggest of all three?"],
+    short: "getlarger(20,30): 30 is larger → prints 30. getlarger(20,30,70): 70 is the largest → prints 70.",
+    deep: `<h4>Overloading Selection</h4>
+Java automatically picks the correct overload based on number of arguments:<br>
+<pre>getlarger(x, y)    → picks getlarger(int, int)
+                    → a=20, b=30 → 30 > 20 → return 30
+
+getlarger(x, y, z) → picks getlarger(int, int, int)
+                    → a=20, b=30, c=70
+                    → 20>30&&20>70? NO
+                    → 30>20&&30>70? NO (30 not > 70)
+                    → else: return c → return 70</pre>`
+  },
+  {
+    type: "theory",
+    q: "What is instance variable hiding?",
+    opts: ["Making a field static", "When a local variable has the same name as an instance field, the local one hides the field inside that method", "Declaring a field private", "Using the 'super' keyword"],
+    ans: 1,
+    hints: ["If a method has a local variable 'x' and the class also has a field 'x', which one does 'x' alone refer to inside the method?", "You need 'this.x' to access the field when hiding occurs."],
+    short: "When a local variable (or parameter) has the same name as an instance field, the local variable 'shadows' the field. You must use 'this.fieldName' to access the field explicitly.",
+    deep: `<h4>Variable Hiding Example</h4>
+<pre>class A {
+    int i = 20; // instance field
+    
+    void m() {
+        int i = 5; // LOCAL variable — same name!
+        System.out.println("i = " + i);      // prints 5 (local)
+        System.out.println("i = " + this.i); // prints 20 (field)
+    }
+}</pre>
+Inside m(), plain <code>i</code> refers to the local variable (5). Only <code>this.i</code> accesses the instance field (20).<br><br>
+This is common in constructors:<br>
+<pre>Circle(int radius) {
+    this.radius = radius; // field = parameter
+}</pre>`
+  },
+  {
+    type: "theory",
+    q: "Which statement correctly creates a Rectangle object using a reference variable?",
+    opts: ["Rectangle = new r1();", "r1 Rectangle = new();", "Rectangle r1 = new Rectangle();", "new Rectangle r1;"],
+    ans: 2,
+    hints: ["The pattern is: TypeName variableName = new TypeName();", "The type name comes first, then the variable name."],
+    short: "The correct syntax is: ClassName variableName = new ClassName(); — Rectangle r1 = new Rectangle();",
+    deep: `<h4>Object Creation Syntax</h4>
+<pre>// Full syntax:
+Rectangle r1 = new Rectangle();
+// Breakdown:
+// Rectangle → the TYPE (class name)
+// r1        → the variable name (holds address of object)
+// new       → allocates memory for the object
+// Rectangle() → calls the constructor
+
+// Can also split in two lines:
+Rectangle r1;           // declare reference variable
+r1 = new Rectangle();   // create object and assign address
+
+// r1 holds the MEMORY ADDRESS of the object, not the object itself</pre>
+This is why we say r1 is a <strong>reference variable</strong>.`
+  },
+
+  // ── CONSTRUCTORS (Q23-30) ──
+  {
+    type: "theory",
+    q: "Which of these is TRUE about constructors?",
+    opts: ["They must have a return type of void", "They have the same name as the class and no return type", "They can only have zero parameters", "They are called explicitly by the programmer"],
+    ans: 1,
+    hints: ["Think about what makes a constructor special compared to other methods.", "A constructor runs automatically when 'new' is used."],
+    short: "A constructor has the SAME NAME as the class and NO return type (not even void). It's called automatically when an object is created with 'new'.",
+    deep: `<h4>Constructor vs Method Comparison</h4>
+<pre>// Regular method:
+public void display() { ... }  // has return type (void)
+public int getArea() { ... }   // has return type (int)
+
+// Constructor:
+public Rectangle() { ... }    // NO return type, same name as class
+public Rectangle(double l, double w) { ... } // overloaded constructor</pre>
+Properties of constructors:<br>
+1. ✅ Same name as class (capital first letter)<br>
+2. ✅ No return type declared<br>
+3. ✅ Usually public<br>
+4. ✅ Called automatically with 'new'<br>
+5. ✅ Can be overloaded`
+  },
+  {
+    type: "code",
+    q: "What does this program output?",
+    code: `public class Rectangle {
+    private double length;
+    private double width;
+    public Rectangle() {
+        length = 10;
+        width = 15;
+        System.out.println("A new room created with 10m length 15m width");
+    }
+    public double getlength() { return length; }
+    public double getwidth()  { return width; }
+}
+// Main:
+Rectangle r1 = new Rectangle();
+System.out.println(r1.getlength());
+System.out.println(r1.getwidth());`,
+    opts: ["10.0\n15.0", "A new room created...\n10.0\n15.0", "A new room created...\n10\n15", "Nothing — constructor doesn't print"],
+    ans: 1,
+    hints: ["The constructor runs automatically when 'new Rectangle()' is called.", "The constructor contains a println statement that executes first."],
+    short: "The constructor runs when 'new Rectangle()' executes, printing the message. Then getlength() returns 10.0 and getwidth() returns 15.0.",
+    deep: `<h4>Constructor Execution Order</h4>
+<pre>Rectangle r1 = new Rectangle();
+//                ↑ constructor called HERE
+// Constructor body executes:
+// 1. length = 10
+// 2. width = 15
+// 3. System.out.println("A new room created...")
+
+// Then main continues:
+System.out.println(r1.getlength()); // 10.0 (double)
+System.out.println(r1.getwidth());  // 15.0 (double)</pre>
+Note: int 10 assigned to <code>double length</code> → automatically promoted to 10.0`
+  },
+  {
+    type: "theory",
+    q: "What is the DEFAULT constructor in Java?",
+    opts: ["A constructor with many parameters", "A constructor automatically provided by Java when you write no constructor", "The first constructor in the class", "A constructor that returns a value"],
+    ans: 1,
+    hints: ["Java provides this for free if you don't write any constructor.", "It sets numbers to 0, booleans to false, and objects to null."],
+    short: "The default constructor is automatically provided by Java when a class has no programmer-written constructors. It sets numeric fields to 0, booleans to false, and reference fields to null.",
+    deep: `<h4>Default Constructor Behavior</h4>
+<pre>// If you write NO constructor, Java creates:
+public Employee() {
+    // emp_id   → 0
+    // ename    → null
+    // depart   → null
+    // salary   → 0.0
+    // bonous   → 0.0
+    // resident → false
+}
+
+// Proof:
+Employee e1 = new Employee();
+e1.print_emp_data();
+// Output:
+// ID 0
+// Name null
+// depart null
+// Salary 0.0
+// Bonous 0.0
+// Resident false</pre>
+⚠️ Once you write ANY constructor, Java removes the default. If you need a no-arg constructor too, write it yourself.`
+  },
+  {
+    type: "code",
+    q: "What is the output?",
+    code: `public class Rectangle {
+    private double length;
+    private double width;
+    public Rectangle() { length = 10; width = 15; }
+    public Rectangle(double l, double w) { length = l; width = w; }
+    public double getlength() { return length; }
+    public double getwidth()  { return width; }
+}
+// Main:
+Rectangle r1 = new Rectangle();
+Rectangle r2 = new Rectangle(40, 60);
+System.out.println(r1.getlength());
+System.out.println(r2.getwidth());`,
+    opts: ["10.0\n15.0", "10.0\n60.0", "40.0\n60.0", "10.0\n40.0"],
+    ans: 1,
+    hints: ["r1 uses the no-arg constructor (length=10, width=15).", "r2 uses the parameterized constructor with 40 and 60."],
+    short: "r1 uses Rectangle() → length=10, width=15. r2 uses Rectangle(40,60) → length=40, width=60. r1.getlength()=10.0, r2.getwidth()=60.0.",
+    deep: `<h4>Constructor Overloading in Use</h4>
+<pre>Rectangle r1 = new Rectangle();        // no-arg: l=10, w=15
+Rectangle r2 = new Rectangle(40, 60);  // parameterized: l=40, w=60
+
+// Each object has its own fields:
+// r1: {length=10.0, width=15.0}
+// r2: {length=40.0, width=60.0}
+
+r1.getlength() → 10.0  ← r1's length
+r2.getwidth()  → 60.0  ← r2's width</pre>
+Constructor overloading allows creating objects in different ways depending on what information is available at creation time.`
+  },
+  {
+    type: "code",
+    q: "Given an Employee class with constructor Employee(int idno, String n, boolean r), what is the output?",
+    code: `Employee e1 = new Employee(300, "Mahmoud", true);
+e1.print_emp_data();
+// print_emp_data prints: ID, Name, depart, Salary, Bonous, Resident`,
+    opts: ["ID 300\nName Mahmoud\ndepart null\nSalary 0.0\nBonous 0.0\nResident true", "ID 300\nName Mahmoud\ndepart Not Assigned Yet\nSalary 2000\nBonous 300\nResident true", "Compile error", "ID 0\nName null\ndepart null\nSalary 0.0\nBonous 0.0\nResident false"],
+    ans: 0,
+    hints: ["The constructor Employee(int, String, boolean) only sets emp_id, ename, and resident. Other fields get default values.", "Fields not set by this constructor remain at their Java defaults."],
+    short: "Constructor Employee(int, String, boolean) sets only emp_id=300, ename='Mahmoud', resident=true. The rest (depart, salary, bonous) get Java defaults: null, 0.0, 0.0.",
+    deep: `<h4>Partial Constructor</h4>
+<pre>public Employee(int idno, String n, boolean r) {
+    emp_id   = idno;  // → 300
+    ename    = n;     // → "Mahmoud"
+    resident = r;     // → true
+    // depart not set → null (default for String)
+    // salary not set → 0.0 (default for double)
+    // bonous not set → 0.0 (default for double)
+}
+
+// Compare with full constructor:
+public Employee(int idno, String n, String d, double s, double b, boolean r) {
+    emp_id = idno; ename = n; depart = d;
+    salary = s; bonous = b; resident = r;
+}</pre>
+The unset fields keep their default values from when the object was first created in memory.`
+  },
+  {
+    type: "theory",
+    q: "Can constructors be overloaded in Java?",
+    opts: ["No, a class can only have one constructor", "Yes, as long as each constructor has a different parameter list", "Yes, but only if they have different return types", "No, only methods can be overloaded"],
+    ans: 1,
+    hints: ["The same overloading rules that apply to methods apply to constructors.", "Different number or types of parameters = different signature = valid overload."],
+    short: "Yes, constructors can be overloaded. Multiple constructors can exist in one class as long as their parameter lists differ.",
+    deep: `<h4>Constructor Overloading Example</h4>
+<pre>public class Employee {
+    public Employee() { ... }                              // no-arg
+    public Employee(int id, String name) { ... }           // 2 params
+    public Employee(int id, String name, boolean r) { ... }// 3 params
+    public Employee(int id, String name, String dept,
+                    double sal, double bonus, boolean r) { } // 6 params
+}
+
+// Usage — Java picks the right constructor:
+Employee e1 = new Employee();                       // no-arg
+Employee e2 = new Employee(101, "Sara");            // 2-param
+Employee e3 = new Employee(102, "Ali", true);       // 3-param</pre>`
+  },
+  {
+    type: "theory",
+    q: "When does a constructor execute?",
+    opts: ["When you call it explicitly like a method", "Only once when the class is loaded", "Automatically when a new object is created with 'new'", "Only when you type the constructor name"],
+    ans: 2,
+    hints: ["The word 'automatically' is key here.", "You never write 'r1.Rectangle()' — it happens via 'new'."],
+    short: "A constructor executes automatically every time you create a new object using 'new'. You never call it manually — Java calls it for you.",
+    deep: `<h4>Automatic Execution</h4>
+<pre>// Each 'new' call = constructor runs once:
+Rectangle r1 = new Rectangle();    // constructor runs → r1 initialized
+Rectangle r2 = new Rectangle();    // constructor runs again → r2 initialized
+Rectangle r3 = new Rectangle(5,10);// parameterized constructor runs
+
+// You CANNOT do this (compile error):
+r1.Rectangle(); // ❌ constructors are NOT callable like regular methods</pre>
+Constructor vs regular method:<br>
+• Constructor: runs automatically with 'new', no return type<br>
+• Regular method: called explicitly, has return type`
+  },
+  {
+    type: "code",
+    q: "An Employee class has constructor Employee() with all default values (salary=2000, etc). What happens when Employee e1 = new Employee() is called and e1.print_emp_data() is invoked?",
+    code: `// Employee() constructor sets:
+// emp_id = 200, ename = "No Name", depart = "Not Assigned Yet"
+// salary = 2000, bonous = 300, resident = true`,
+    opts: ["ID 0, Name null, etc (default Java values)", "ID 200, Name No Name, depart Not Assigned Yet, Salary 2000.0, Bonous 300.0, Resident true", "Compile error — no constructor with 0 args", "ID 200, Name null, Salary 0.0"],
+    ans: 1,
+    hints: ["The no-arg constructor explicitly sets values — these override the Java defaults.", "The constructor body runs first, setting all those values before print_emp_data() runs."],
+    short: "The no-arg constructor explicitly sets all fields to specific values. So the output shows those programmed values, not the Java defaults (0, null, false).",
+    deep: `<h4>Custom No-arg Constructor</h4>
+<pre>public Employee() {
+    emp_id   = 200;              // NOT default 0
+    ename    = "No Name";        // NOT default null
+    depart   = "Not Assigned Yet"; // NOT null
+    salary   = 2000;             // NOT 0.0
+    bonous   = 300;              // NOT 0.0
+    resident = true;             // NOT false
+}</pre>
+This is the PROGRAMMER's no-arg constructor. It intentionally sets meaningful defaults, not the Java language defaults.<br><br>
+This is different from the default constructor provided by Java (which sets everything to 0/null/false).`
+  },
+
+  // ── STATIC (Q31-40) ──
+  {
+    type: "theory",
+    q: "What is the key difference between a static field and an instance field?",
+    opts: ["Static fields can only hold integers", "Static fields belong to the class and are shared by all objects; instance fields are per-object", "Instance fields are public; static fields are private", "There is no difference"],
+    ans: 1,
+    hints: ["Think of how many copies exist: one per class vs one per object.", "Static = shared across ALL instances."],
+    short: "A static field has ONE copy for the entire class, shared by all objects. An instance field has a SEPARATE copy for each object.",
+    deep: `<h4>Memory Model</h4>
+<pre>// Class Car has: String maker (instance) + static int count (static)
+
+Car c1 = new Car("Honda");
+Car c2 = new Car("Toyota");
+Car c3 = new Car("BMW");
+
+// Memory layout:
+// c1: {maker="Honda"}  ─┐
+// c2: {maker="Toyota"} ─┤── each has own 'maker'
+// c3: {maker="BMW"}    ─┘
+
+// count: 3    ← ONE shared copy for ALL cars
+//         (lives in the class, not in any object)</pre>
+Static fields are stored ONCE in the class definition area in memory, not duplicated per object.`
+  },
+  {
+    type: "code",
+    q: "How is a static method called?",
+    code: `public class Calc {
+    public static int add(int a, int b) { return a + b; }
+}
+// Which is the correct call from Main?`,
+    opts: ["Calc c = new Calc(); c.add(5, 3);", "Calc.add(5, 3);", "add(5, 3);", "static.add(5, 3);"],
+    ans: 1,
+    hints: ["Static methods belong to the class, not to any specific object.", "You use ClassName.methodName() for static methods."],
+    short: "Static methods are called using the class name: Calc.add(5, 3). You don't need to create an object. (Calling via an object also works but is not the preferred style.)",
+    deep: `<h4>Static vs Instance Method Calls</h4>
+<pre>// Static method call — preferred:
+Calc.add(5, 3);    // class name dot method name ✅
+
+// Also works (but misleading — suggests it's per-object):
+Calc c = new Calc();
+c.add(5, 3);       // compiles but not recommended ⚠️
+
+// Real-world example you already know:
+Math.sqrt(25.0);   // Math is a class, sqrt is static
+System.out.println(); // System.out.println is also static!</pre>
+You CANNOT call a static method on a null reference without errors in some contexts, which is why class-name calling is preferred.`
+  },
+  {
+    type: "code",
+    q: "What is the output?",
+    code: `public class Car {
+    private String maker;
+    private int model;
+    private static int no_of_objects;
+    public Car() { maker="Honda"; model=2017; no_of_objects++; }
+    public static int get_no_of_objects() { return no_of_objects; }
+}
+// Main:
+Car c1 = new Car();
+Car c2 = new Car();
+Car c3 = new Car();
+System.out.println(Car.get_no_of_objects());
+System.out.println(c2.get_no_of_objects());`,
+    opts: ["1\n2", "3\n3", "3\n1", "1\n3"],
+    ans: 1,
+    hints: ["no_of_objects is STATIC — shared across all cars. It increments each time new Car() is called.", "Both ways of calling (Car. and c2.) read the same static variable."],
+    short: "3 cars are created, so no_of_objects = 3. Both Car.get_no_of_objects() and c2.get_no_of_objects() return the same shared value: 3.",
+    deep: `<h4>Static Counter Pattern</h4>
+<pre>Car c1 = new Car(); // no_of_objects++ → 1
+Car c2 = new Car(); // no_of_objects++ → 2
+Car c3 = new Car(); // no_of_objects++ → 3
+
+// Both refer to the same static field:
+Car.get_no_of_objects() → 3 (class-level call)
+c2.get_no_of_objects()  → 3 (object-level call, same result)</pre>
+This pattern is commonly used to track how many objects of a class have been created. The static field exists once in the class, incremented by each constructor call.`
+  },
+  {
+    type: "theory",
+    q: "Can a static method directly access an instance (non-static) field?",
+    opts: ["Yes, always", "No, static methods can only access static fields", "Only if the field is public", "Only if the method is in the same class"],
+    ans: 1,
+    hints: ["Static methods don't operate on any specific object — so which object's field would they access?", "To access an instance field from a static method, you need an object reference."],
+    short: "No. A static method belongs to the class, not to any specific object. Instance fields belong to specific objects. Without knowing WHICH object, a static method can't access instance fields.",
+    deep: `<h4>Why Static Can't Access Instance</h4>
+<pre>public class Car {
+    private String maker;          // instance field
+    private static int count;      // static field
+    
+    public static void test() {
+        System.out.println(count);  // ✅ can access static
+        System.out.println(maker);  // ❌ ERROR: non-static field 
+                                    // cannot be referenced from static
+    }
+    
+    // To access instance field from static, need an object:
+    public static void test2(Car c) {
+        System.out.println(c.maker); // ✅ via object reference
+    }
+}</pre>
+main() itself is static — that's why you always need objects to call instance methods from main.`
+  },
+  {
+    type: "theory",
+    q: "What is a utility class?",
+    opts: ["A class that manages utility bills", "A class containing only static methods, used by calling the class name directly", "A class with no fields", "A class used only for constructors"],
+    ans: 1,
+    hints: ["The Math class in Java is a classic example of this.", "You never create an object of a utility class."],
+    short: "A utility class contains only static methods that provide helper functions. You call them via the class name. Java's Math class is the prime example: Math.sqrt(), Math.abs(), etc.",
+    deep: `<h4>Utility Class Pattern</h4>
+<pre>public class Calc {
+    // All methods are static — no object needed
+    public static int    add(int a, int b)      { return a + b; }
+    public static int    subtract(int a, int b)  { return a - b; }
+    public static int    multiply(int a, int b)  { return a * b; }
+}
+
+// Usage — no 'new Calc()' needed:
+System.out.println(Calc.add(30, 20));      // 50
+System.out.println(Calc.subtract(30, 20)); // 10
+System.out.println(Calc.multiply(30, 20)); // 600
+
+// Java's built-in utility classes:
+Math.sqrt(25.0)    // 5.0
+Math.abs(-7)       // 7
+Math.pow(2, 10)    // 1024.0</pre>`
+  },
+  {
+    type: "code",
+    q: "What is the output?",
+    code: `public class Calc {
+    public static int add(int a, int b)      { return a + b; }
+    public static int subtract(int a, int b)  { return a - b; }
+    public static int multiply(int a, int b)  { return a * b; }
+}
+// Main:
+System.out.println(Calc.add(30, 20));
+System.out.println(Calc.subtract(30, 20));
+System.out.println(Calc.multiply(30, 20));`,
+    opts: ["50\n10\n600", "50\n-10\n600", "50\n10\n60", "Compile error — no object created"],
+    ans: 0,
+    hints: ["30+20=50, 30-20=10, 30×20=600.", "Static methods can be called without creating an object."],
+    short: "Calc.add(30,20)=50, Calc.subtract(30,20)=10, Calc.multiply(30,20)=600.",
+    deep: `<h4>Arithmetic Results</h4>
+<pre>Calc.add(30, 20)      → 30 + 20 = 50
+Calc.subtract(30, 20) → 30 - 20 = 10
+Calc.multiply(30, 20) → 30 × 20 = 600</pre>
+These are static methods so no object is needed. The class name is sufficient to invoke them.<br><br>
+This is analogous to:<br>
+<pre>Math.sqrt(25.0);  // → 5.0, no new Math() needed</pre>`
+  },
+  {
+    type: "theory",
+    q: "What are the three types of variables discussed in OOP Java?",
+    opts: ["Global, local, temporary", "Local variables, instance variables, class (static) variables", "Public, private, protected variables", "Int, double, String variables"],
+    ans: 1,
+    hints: ["They are categorized by WHERE they're declared.", "One is inside a method, one is in the class but not static, one is static."],
+    short: "The three types are: local variables (inside methods), instance variables (non-static fields — one per object), and class variables (static fields — one shared copy).",
+    deep: `<h4>Variable Type Cheat Sheet</h4>
+<pre>class Bicycle {
+    int speed;              // Instance variable (non-static field)
+    static int count;       // Class variable (static field)
+    
+    void speedUp(int increment) {  // increment = parameter
+        int newSpeed = speed + increment; // newSpeed = local variable
+        speed = newSpeed;
+    }
+}</pre>
+<table style="font-size:12px;border-collapse:collapse">
+<tr style="background:#21262d"><th style="padding:5px 8px;border:1px solid #30363d">Type</th><th style="padding:5px 8px;border:1px solid #30363d">Where</th><th style="padding:5px 8px;border:1px solid #30363d">Copies</th><th style="padding:5px 8px;border:1px solid #30363d">Lifetime</th></tr>
+<tr><td style="padding:5px 8px;border:1px solid #30363d">Local</td><td style="padding:5px 8px;border:1px solid #30363d">Inside method</td><td style="padding:5px 8px;border:1px solid #30363d">1 per call</td><td style="padding:5px 8px;border:1px solid #30363d">During method</td></tr>
+<tr><td style="padding:5px 8px;border:1px solid #30363d">Instance</td><td style="padding:5px 8px;border:1px solid #30363d">In class, not static</td><td style="padding:5px 8px;border:1px solid #30363d">1 per object</td><td style="padding:5px 8px;border:1px solid #30363d">Object lifetime</td></tr>
+<tr><td style="padding:5px 8px;border:1px solid #30363d">Class (static)</td><td style="padding:5px 8px;border:1px solid #30363d">In class, static</td><td style="padding:5px 8px;border:1px solid #30363d">1 total</td><td style="padding:5px 8px;border:1px solid #30363d">Program lifetime</td></tr>
+</table>`
+  },
+  {
+    type: "code",
+    q: "What is the output?",
+    code: `public class Car {
+    private String maker;
+    private int model;
+    private static int no_of_objects;
+
+    public Car() { maker="Honda"; model=2017; no_of_objects++; }
+    public Car(String m, int mo) { maker=m; model=mo; no_of_objects++; }
+    public static int get_no_of_objects() { return no_of_objects; }
+}
+// Main:
+Car c1 = new Car();
+Car c2 = new Car("Toyota", 2020);
+Car c3 = new Car("BMW", 2022);
+Car c4 = new Car();
+System.out.println(Car.get_no_of_objects());`,
+    opts: ["2", "3", "4", "1"],
+    ans: 2,
+    hints: ["Count how many times 'new Car()' or 'new Car(...)' is called.", "Each 'new' call runs a constructor, which does no_of_objects++."],
+    short: "Four objects are created (c1, c2, c3, c4). Each constructor increments no_of_objects. Final value: 4.",
+    deep: `<h4>Trace</h4>
+<pre>Car c1 = new Car();              // no_of_objects: 0→1
+Car c2 = new Car("Toyota", 2020); // no_of_objects: 1→2
+Car c3 = new Car("BMW", 2022);   // no_of_objects: 2→3
+Car c4 = new Car();              // no_of_objects: 3→4
+
+Car.get_no_of_objects() → 4</pre>
+Both constructors (no-arg and 2-param) both contain <code>no_of_objects++</code>, so every object creation counts.`
+  },
+  {
+    type: "code",
+    q: "What is the output of this program involving method chaining?",
+    code: `public static void main(String[] args) {
+    int x = 3;
+    int y = m1(x);
+    System.out.println(y);
+}
+public static int m1(int n) {
+    n++;
+    int z = m2(n);
+    return z;
+}
+public static int m2(int m) {
+    m *= 2;
+    return m;
+}`,
+    opts: ["6", "8", "3", "4"],
+    ans: 1,
+    hints: ["m1 receives 3, increments to 4, then calls m2(4).", "m2 receives 4, multiplies by 2 to get 8, returns 8."],
+    short: "x=3 → m1(3): n=3, n++ makes n=4, calls m2(4). m2(4): m=4, m*=2 makes m=8, returns 8. m1 returns 8. y=8. Output: 8.",
+    deep: `<h4>Call Chain Trace</h4>
+<pre>main:
+  x = 3
+  y = m1(3)
+  
+m1(3):
+  n = 3
+  n++ → n = 4
+  z = m2(4)
+  
+  m2(4):
+    m = 4
+    m *= 2 → m = 8
+    return 8
+    
+  z = 8
+  return 8
+
+main:
+  y = 8
+  System.out.println(8) → 8</pre>
+Key point: n++ in m1 only affects m1's LOCAL copy of n, not the original x in main (call by value). But the return value properly passes data back up the call chain.`
+  },
+  {
+    type: "theory",
+    q: "When is the default constructor NO LONGER provided by Java?",
+    opts: ["When the class has private fields", "When the class has any static methods", "When the programmer writes any constructor", "When the class extends another class"],
+    ans: 2,
+    hints: ["Java provides the default constructor only when no constructor exists.", "Write one constructor → Java removes its automatic one."],
+    short: "Java provides a default constructor ONLY when the class has NO programmer-defined constructors. As soon as you write even one constructor, Java stops providing the default.",
+    deep: `<h4>Default Constructor Rule</h4>
+<pre>// Case 1: No constructors → Java provides default
+public class A {
+    int x; // no constructors written
+}
+A a = new A(); // ✅ works — Java's default constructor
+
+// Case 2: Write a parameterized constructor → default gone
+public class B {
+    int x;
+    public B(int val) { x = val; } // programmer-written
+}
+B b = new B();    // ❌ COMPILE ERROR: no no-arg constructor!
+B b = new B(5);   // ✅ this works
+
+// Solution: explicitly write the no-arg constructor too
+public class C {
+    int x;
+    public C() { x = 0; }      // you wrote it yourself
+    public C(int val) { x = val; }
+}
+C c1 = new C();   // ✅
+C c2 = new C(5);  // ✅</pre>`
+  },
+  {
+    type: "code",
+    q: "Identify the error in this code:",
+    code: `public class Main {
+    public static void main(String[] args) {
+        int x = 20;
+    }
+    public static void display() {
+        System.out.println(x);  // Line A
+    }
+}`,
+    opts: ["No error — x is accessible", "Line A: x is a local variable in main and not visible in display()", "Line A: x should be declared as double", "The method display() needs to return a value"],
+    ans: 1,
+    hints: ["'x' is declared inside main() — what is its scope?", "Local variables only exist in the method they're declared in."],
+    short: "x is a local variable of main(). It only exists inside main(). The method display() cannot see it — compile error: 'cannot find symbol x'.",
+    deep: `<h4>Fix: Use a Global (Static) Variable</h4>
+<pre>// BROKEN:
+public class Main {
+    public static void main(String[] args) {
+        int x = 20; // local — dies when main ends
+    }
+    public static void display() {
+        System.out.println(x); // ❌ ERROR: x not visible here
+    }
+}
+
+// FIXED with static field:
+public class Main {
+    static int x; // class-level — visible to all methods
+    
+    public static void main(String[] args) {
+        x = 20;
+        display(); // ✅
+    }
+    public static void display() {
+        System.out.println(x); // ✅ x = 20
+    }
+}</pre>`
+  }
+];
+
+// ════════════════════════════════════════
+// RENDER QUESTIONS
+// ════════════════════════════════════════
+let correctCount = 0, wrongCount = 0, answeredCount = 0;
+
+function htmlCode(code) {
+  return code
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/(\/\/[^\n]*)/g,'<span class="cmt">$1</span>')
+    .replace(/\b(public|private|static|class|void|return|new|int|double|boolean|char|if|else|for|while|String|null|true|false|import|this)\b/g,'<span class="kw">$1</span>')
+    .replace(/&lt;span class="kw"&gt;(String)&lt;\/span&gt;/g,'<span class="cls">String</span>')
+    .replace(/\b([A-Z][A-Za-z0-9_]+)\b/g, '<span class="cls">$1</span>')
+    .replace(/\b(\d+\.?\d*[fd]?)\b/g,'<span class="num">$1</span>')
+    .replace(/"([^"]*)"/g,'<span class="str">"$1"</span>')
+    .replace(/'([^']*)'/g,'<span class="str">\'$1\'</span>');
+}
+
+function renderQuestions() {
+  const container = document.getElementById('questions');
+  container.innerHTML = '';
+  questions.forEach((q, idx) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = 'qcard-' + idx;
+
+    const letters = ['A','B','C','D'];
+    const optsHtml = q.opts.map((opt, oi) => `
+      <button class="option" id="opt-${idx}-${oi}" onclick="selectOption(${idx},${oi})" data-idx="${idx}" data-oi="${oi}">
+        <span class="opt-letter">${letters[oi]}</span>
+        <span>${opt.replace(/\n/g,'<br>')}</span>
+      </button>`).join('');
+
+    const codeHtml = q.code ? `<div class="q-code">${htmlCode(q.code)}</div>` : '';
+
+    card.innerHTML = `
+      <div class="q-header">
+        <span class="q-num">Q${idx+1}</span>
+        <span class="q-type ${q.type}">${q.type === 'theory' ? '📘 Theory' : '💻 Code Output'}</span>
+      </div>
+      <div class="q-body">
+        <div class="q-text">${q.q}</div>
+        ${codeHtml}
+        <div class="options">${optsHtml}</div>
+        <div class="q-feedback" id="fb-${idx}">
+          <div class="feedback-result" id="fbr-${idx}"></div>
+          <div class="hint-buttons">
+            <button class="hint-btn" onclick="toggleHint(${idx},1)">💡 Hint 1</button>
+            <button class="hint-btn" onclick="toggleHint(${idx},2)">💡 Hint 2</button>
+            <button class="explain-btn" onclick="toggleExplain(${idx},'short')">📄 Quick Explanation</button>
+            <button class="explain-btn" onclick="toggleExplain(${idx},'deep')">🔬 Deep Explanation</button>
+          </div>
+          <div class="hint-panel" id="hint-${idx}-1">${q.hints[0]}</div>
+          <div class="hint-panel" id="hint-${idx}-2">${q.hints[1]}</div>
+          <div class="short-explain" id="short-${idx}">${q.short}</div>
+          <div class="deep-explain" id="deep-${idx}">${q.deep}</div>
+        </div>
+      </div>`;
+    container.appendChild(card);
+  });
+}
+
+function selectOption(qIdx, oIdx) {
+  const q = questions[qIdx];
+  const allOpts = document.querySelectorAll(`[data-idx="${qIdx}"]`);
+
+  // Already answered?
+  if (allOpts[0].disabled) return;
+
+  // Disable all options
+  allOpts.forEach(o => o.disabled = true);
+
+  const correct = q.ans === oIdx;
+  allOpts[oIdx].classList.add(correct ? 'correct' : 'wrong');
+  allOpts[q.ans].classList.add('correct');
+
+  // Update card border
+  const card = document.getElementById('qcard-' + qIdx);
+  card.classList.add(correct ? 'answered-correct' : 'answered-wrong');
+
+  // Feedback bar
+  const fbr = document.getElementById('fbr-' + qIdx);
+  fbr.className = 'feedback-result ' + (correct ? 'correct' : 'wrong');
+  fbr.innerHTML = correct ? '✅ Correct! Well done.' : `❌ Incorrect. The correct answer is <strong>${['A','B','C','D'][q.ans]}</strong>.`;
+
+  // Show feedback panel
+  document.getElementById('fb-' + qIdx).classList.add('visible');
+
+  // Update score
+  answeredCount++;
+  if (correct) correctCount++;
+  else wrongCount++;
+  updateScore();
+}
+
+function toggleHint(qIdx, num) {
+  const el = document.getElementById(`hint-${qIdx}-${num}`);
+  el.classList.toggle('open');
+}
+
+function toggleExplain(qIdx, type) {
+  const id = type === 'short' ? `short-${qIdx}` : `deep-${qIdx}`;
+  document.getElementById(id).classList.toggle('open');
+}
+
+function updateScore() {
+  document.getElementById('sc').textContent = correctCount;
+  document.getElementById('sw').textContent = wrongCount;
+  document.getElementById('sa').textContent = answeredCount;
+  const pct = answeredCount > 0 ? Math.round((correctCount/answeredCount)*100) : 0;
+  document.getElementById('sp').textContent = pct + '%';
+  document.getElementById('progressBar').style.width = (answeredCount/questions.length*100) + '%';
+}
+
+function resetExam() {
+  correctCount = wrongCount = answeredCount = 0;
+  updateScore();
+  renderQuestions();
+  window.scrollTo({top: document.getElementById('exam').offsetTop - 60, behavior: 'smooth'});
+}
+
+function showAllAnswers() {
+  questions.forEach((q, idx) => {
+    const allOpts = document.querySelectorAll(`[data-idx="${idx}"]`);
+    if (!allOpts[0].disabled) {
+      allOpts.forEach(o => o.disabled = true);
+      allOpts[q.ans].classList.add('correct');
+      const card = document.getElementById('qcard-' + idx);
+      card.classList.add('answered-correct');
+      const fbr = document.getElementById('fbr-' + idx);
+      fbr.className = 'feedback-result correct';
+      fbr.innerHTML = `✅ Answer: <strong>${['A','B','C','D'][q.ans]}</strong>`;
+      document.getElementById('fb-' + idx).classList.add('visible');
+    }
+  });
+}
+
+// Init
+renderQuestions();
+updateScore();
+
+// Nav active highlighting on scroll
+const sections = ['java-syntax','methods','oop','constructors','static','exam'];
+window.addEventListener('scroll', () => {
+  const y = window.scrollY + 80;
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const a = document.querySelector(`nav a[href="#${id}"]`);
+    if (!a) return;
+    if (el.offsetTop <= y && el.offsetTop + el.offsetHeight > y) {
+      a.classList.add('active');
+    } else {
+      a.classList.remove('active');
+    }
+  });
+});
+</script>
+</body>
+</html>
